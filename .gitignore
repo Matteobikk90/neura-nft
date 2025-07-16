@@ -1,0 +1,18 @@
+# Node
+node_modules
+.pnpm-debug.log
+
+# Expo
+.expo
+.expo-shared
+web-build
+dist
+build
+
+# Env
+.env
+.env.*
+
+# Misc
+*.DS_Store
+*.log
