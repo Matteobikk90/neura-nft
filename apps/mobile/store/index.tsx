@@ -23,6 +23,6 @@ export const useStore = create<StoreState>()(
         address,
         darkMode,
       }),
-    }
-  )
+    },
+  ),
 );
