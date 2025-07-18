@@ -1,1 +1,1 @@
-export const projectId = "36cc42754ea30125852b75308c841044";
+export const projectId = process.env.EXPO_PUBLIC_REOWN_PROJECT_ID!;

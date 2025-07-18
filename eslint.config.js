@@ -16,6 +16,7 @@ export default [
       parser: typescriptEslintParser,
       globals: {
         ...globals.browser,
+        ...globals.node,
         React: true,
         NodeJS: true,
       },
@@ -32,7 +33,6 @@ export default [
       ...typescriptEslintPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       "tailwindcss/classnames-order": "warn",
-      "prettier/prettier": "warn",
       "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
@@ -54,5 +54,14 @@ export default [
       "contracts/**/*.sol",
       "backend/go-api",
     ],
+  },
+  {
+    files: ["./apps/mobile/metro.config.js"],
+    languageOptions: {
+      sourceType: "commonjs",
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
   },
 ];
