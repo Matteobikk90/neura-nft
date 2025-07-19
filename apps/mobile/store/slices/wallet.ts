@@ -8,4 +8,12 @@ export const createWalletSlice: StateCreator<WalletSliceType> = (set) => ({
   icon: null,
   url: null,
   setWalletInfo: (info) => set((state) => ({ ...state, ...info })),
+  clearWalletInfo: () =>
+    set(() => ({
+      address: null,
+      chainId: null,
+      provider: null,
+      icon: null,
+      url: null,
+    })),
 });

@@ -5,4 +5,5 @@ export type WalletSliceType = {
   icon: string | null;
   url: string | null;
   setWalletInfo: (info: Partial<WalletSliceType>) => void;
+  clearWalletInfo: () => void;
 };
