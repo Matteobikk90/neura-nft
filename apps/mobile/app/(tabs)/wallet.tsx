@@ -1,5 +1,4 @@
-import { lazy } from "react";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { View } from "react-native";
 const WalletScreen = lazy(() => import("@/screens/WalletsScreen"));
 

@@ -1,15 +1,15 @@
-import { Pressable, Text } from "react-native";
+import { useStore } from "@/store";
 import {
   useAppKit,
   useAppKitAccount,
   useDisconnect,
   useWalletInfo,
 } from "@reown/appkit-ethers5-react-native";
-import { useStore } from "@/store";
-import { useEffect } from "react";
 import { router } from "expo-router";
-import { useShallow } from "zustand/shallow";
+import { useEffect } from "react";
+import { Pressable, Text } from "react-native";
 import Toast from "react-native-toast-message";
+import { useShallow } from "zustand/shallow";
 
 export default function WalletsScreen() {
   const { setWalletInfo, clearWalletInfo } = useStore(

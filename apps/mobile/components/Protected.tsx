@@ -1,8 +1,8 @@
 import { useIsAuthenticated } from "@/hooks/useIsAuthenticated";
-import Toast from "react-native-toast-message";
 import { router } from "expo-router";
-import { useEffect } from "react";
 import type { ReactNode } from "react";
+import { useEffect } from "react";
+import Toast from "react-native-toast-message";
 
 export default function Protected({ children }: { children: ReactNode }) {
   const isAuth = useIsAuthenticated();

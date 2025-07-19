@@ -1,8 +1,8 @@
-import "@/global.css";
 import "@/config/web3";
+import "@/global.css";
+import { AppKit } from "@reown/appkit-ethers5-react-native";
 import { Slot } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppKit } from "@reown/appkit-ethers5-react-native";
 import Toast from "react-native-toast-message";
 
 export default function RootLayout() {

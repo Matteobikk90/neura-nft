@@ -1,13 +1,13 @@
+import { createThemeSlice } from "@/store/slices/theme";
+import { createWalletSlice } from "@/store/slices/wallet";
+import type { StoreState } from "@/types/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import {
   createJSONStorage,
   persist,
   subscribeWithSelector,
 } from "zustand/middleware";
-import { createWalletSlice } from "@/store/slices/wallet";
-import { createThemeSlice } from "@/store/slices/theme";
-import type { StoreState } from "@/types/store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useStore = create<StoreState>()(
   persist(

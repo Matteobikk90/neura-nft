@@ -3,8 +3,8 @@ import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import typescriptEslintParser from "@typescript-eslint/parser";
 import prettierPlugin from "eslint-plugin-prettier";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
-import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import tailwindPlugin from "eslint-plugin-tailwindcss";
+import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import globals from "globals";
 
 export default [
