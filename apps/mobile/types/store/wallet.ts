@@ -1,4 +1,8 @@
 export type WalletSliceType = {
   address: string | null;
-  setAddress: (address: string | null) => void;
+  chainId: number | null;
+  provider: string | null;
+  icon: string | null;
+  url: string | null;
+  setWalletInfo: (info: Partial<WalletSliceType>) => void;
 };
