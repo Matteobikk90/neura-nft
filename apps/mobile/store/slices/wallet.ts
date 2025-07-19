@@ -3,5 +3,9 @@ import { StateCreator } from "zustand";
 
 export const createWalletSlice: StateCreator<WalletSliceType> = (set) => ({
   address: null,
-  setAddress: (address) => set({ address }),
+  chainId: null,
+  provider: null,
+  icon: null,
+  url: null,
+  setWalletInfo: (info) => set((state) => ({ ...state, ...info })),
 });
