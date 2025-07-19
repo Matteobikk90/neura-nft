@@ -9,6 +9,7 @@ import { useStore } from "@/store";
 import { useEffect } from "react";
 import { router } from "expo-router";
 import { useShallow } from "zustand/shallow";
+import Toast from "react-native-toast-message";
 
 export default function WalletsScreen() {
   const { setWalletInfo, clearWalletInfo } = useStore(
@@ -34,6 +35,11 @@ export default function WalletsScreen() {
         icon: walletInfo.icon ?? null,
         url: walletInfo.url ?? null,
       });
+      Toast.show({
+        type: "success",
+        text1: "Wallet connected",
+        text2: `${walletInfo.name ?? "Wallet"} connected successfully`,
+      });
       router.replace("/");
     }
   }, [address, chainId, walletInfo, setWalletInfo]);
@@ -42,6 +48,11 @@ export default function WalletsScreen() {
     if (isAuthenticated) {
       disconnect();
       clearWalletInfo();
+      Toast.show({
+        type: "info",
+        text1: "Disconnected",
+        text2: "Wallet disconnected",
+      });
     } else {
       open();
     }
