@@ -1,3 +1,4 @@
+import { Text } from "@/lib/nativewindui/Text";
 import { useStore } from "@/store";
 import {
   useAppKit,
@@ -7,7 +8,7 @@ import {
 } from "@reown/appkit-ethers5-react-native";
 import { router } from "expo-router";
 import { useEffect } from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable } from "react-native";
 import Toast from "react-native-toast-message";
 import { useShallow } from "zustand/shallow";
 

@@ -6,8 +6,8 @@ export const tabs = [
     isProtected: false,
   },
   {
-    name: "two",
-    title: "More",
+    name: "nfts",
+    title: "NFTs",
     icon: "grid-outline",
     isProtected: true,
   },
