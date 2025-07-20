@@ -1,3 +1,4 @@
+import { CustomModal } from "@/components/CustomModal";
 import "@/config/web3";
 import "@/global.css";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
@@ -16,6 +17,7 @@ export default function RootLayout() {
       <Slot />
       <AppKit />
       <Toast />
+      <CustomModal />
     </SafeAreaView>
   );
 }

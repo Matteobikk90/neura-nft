@@ -1,3 +1,4 @@
+import { createModalSlice } from "@/store/slices/modal";
 import { createThemeSlice } from "@/store/slices/theme";
 import { createWalletSlice } from "@/store/slices/wallet";
 import type { StoreState } from "@/types/store";
@@ -14,6 +15,7 @@ export const useStore = create<StoreState>()(
     subscribeWithSelector((set, get, store) => ({
       ...createThemeSlice(set, get, store),
       ...createWalletSlice(set, get, store),
+      ...createModalSlice(set, get, store),
     })),
     {
       name: "global-store",

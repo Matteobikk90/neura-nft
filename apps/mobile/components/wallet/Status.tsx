@@ -6,8 +6,12 @@ import { Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export default function WalletStatus() {
-  const { address, provider } = useStore(
-    useShallow(({ address, provider }) => ({ address, provider })),
+  const { address, provider, openModal } = useStore(
+    useShallow(({ address, provider, openModal }) => ({
+      address,
+      provider,
+      openModal,
+    })),
   );
 
   if (!address) return null;
@@ -15,7 +19,7 @@ export default function WalletStatus() {
   return (
     <View className="flex w-full flex-row items-center justify-between rounded-md bg-zinc-800 p-4">
       <View className="flex-row items-center gap-2">
-        <View className="h-10 w-10 items-center justify-center rounded-full bg-violet-600/40">
+        <View className="h-10 w-10 items-center justify-center rounded-md bg-violet-600/40">
           <Ionicons name="wallet" size={18} color="#8b5cf6" />
         </View>
         <View>
@@ -35,9 +39,12 @@ export default function WalletStatus() {
         </View>
       </View>
 
-      <View className="h-10 w-10 items-center justify-center rounded-full bg-zinc-700">
+      <Pressable
+        className="h-10 w-10 items-center justify-center rounded-md bg-zinc-700"
+        onPress={() => openModal("qr", { address })}
+      >
         <Ionicons name="qr-code-sharp" size={18} color="white" />
-      </View>
+      </Pressable>
     </View>
   );
 }
