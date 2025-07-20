@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { View } from "react-native";
-const WalletScreen = lazy(() => import("@/screens/WalletsScreen"));
+const WalletScreen = lazy(() => import("@/screens/Wallet"));
 
 export default function Wallet() {
   return (
