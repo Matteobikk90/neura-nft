@@ -1,7 +1,8 @@
+import { Text } from "@/lib/nativewindui/Text";
 import { useStore } from "@/store";
 import { copyToClipboard } from "@/utils/clipboard";
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export default function WalletStatus() {
@@ -18,10 +19,10 @@ export default function WalletStatus() {
           <Ionicons name="wallet" size={18} color="#8b5cf6" />
         </View>
         <View>
-          <Text className="text-sm text-zinc-400">Connected as</Text>
+          <Text className="text-sm">Connected as</Text>
           <View className="flex flex-row items-center gap-1">
             {provider && <Text className="text-[#8b5cf6]">{provider}</Text>}
-            <Text className="text-zinc-400">
+            <Text className="">
               {address.slice(0, 6)}...{address.slice(-4)}
             </Text>
             <Pressable

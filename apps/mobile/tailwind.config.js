@@ -1,7 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 import nativewind from "nativewind/preset";
 
-export const content = ["./app/**/*.{js,jsx,ts,tsx}"];
+export const content = [
+  "./app/**/*.{js,jsx,ts,tsx}",
+  "./components/**/*.{js,jsx,ts,tsx}",
+  "./lib/**/*.{js,jsx,ts,tsx}",
+  "./screens/**/*.{js,jsx,ts,tsx}",
+];
 
 export const presets = [nativewind];
 

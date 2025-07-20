@@ -1,5 +1,6 @@
 import Protected from "@/components/Protected";
-import { Text, View } from "react-native";
+import { Text } from "@/lib/nativewindui/Text";
+import { View } from "react-native";
 
 export default function NFTs() {
   return (

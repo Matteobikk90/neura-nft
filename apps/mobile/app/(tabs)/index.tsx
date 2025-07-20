@@ -1,6 +1,7 @@
-import WalletStatus from "@/components/wallet/Status";
+import WalletStatus from "@/components/Wallet/Status";
+import { Text } from "@/lib/nativewindui/Text";
 import { useStore } from "@/store";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 export default function Home() {
   const address = useStore(({ address }) => address);
@@ -8,8 +9,8 @@ export default function Home() {
   return (
     <View className="flex-1 items-center bg-zinc-900 p-4">
       {address && <WalletStatus />}
-      <Text className="mb-2 text-3xl text-white">🧠 NeuraNFT</Text>
-      <Text className="text-center text-white">
+      <Text className="mb-2 text-3xl">🧠 NeuraNFT</Text>
+      <Text className="text-center">
         Connect your wallet and start minting personalized AI NFTs.
       </Text>
     </View>

@@ -12,7 +12,7 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaView className="bg-background text-foreground flex-1">
+    <SafeAreaView className="bg-background flex-1">
       <Slot />
       <AppKit />
       <Toast />
