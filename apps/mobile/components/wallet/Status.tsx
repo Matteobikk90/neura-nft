@@ -1,4 +1,4 @@
-import { Text } from "@/lib/nativewindui/Text";
+import { Text } from "@/lib/ui/Text";
 import { useStore } from "@/store";
 import { copyToClipboard } from "@/utils/clipboard";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,15 +17,15 @@ export default function WalletStatus() {
   if (!address) return null;
 
   return (
-    <View className="flex w-full flex-row items-center justify-between rounded-md bg-zinc-800 p-4">
+    <View className="bg-zinc flex w-full flex-row items-center justify-between rounded-md p-4">
       <View className="flex-row items-center gap-2">
-        <View className="h-10 w-10 items-center justify-center rounded-md bg-violet-600/40">
+        <View className="bg-primary/40 h-10 w-10 items-center justify-center rounded-md">
           <Ionicons name="wallet" size={18} color="#8b5cf6" />
         </View>
         <View>
           <Text className="text-sm">Connected as</Text>
           <View className="flex flex-row items-center gap-1">
-            {provider && <Text className="text-[#8b5cf6]">{provider}</Text>}
+            {provider && <Text className="text-primary">{provider}</Text>}
             <Text className="">
               {address.slice(0, 6)}...{address.slice(-4)}
             </Text>
