@@ -1,4 +1,4 @@
-import { Text } from "@/lib/nativewindui/Text";
+import { Text } from "@/lib/ui/Text";
 import { useStore } from "@/store";
 import {
   useAppKit,

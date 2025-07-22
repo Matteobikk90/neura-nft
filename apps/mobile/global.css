@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 23 21 34;
+    --primary: 139 92 246;
+    --zinc: 39 39 42;
+    --gray: 147 154 165;
+
+    --android-background: 249 249 255;
+    --android-foreground: 23 21 34;
+    --android-primary: 139 92 246;
+    --android-zinc: 39 39 42;
+    --android-gray: 147 154 165;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 23 21 34;
+      --foreground: 255 255 255;
+      --primary: 139 92 246;
+      --zinc: 228 228 231;
+      --gray: 147 154 165;
+
+      --android-background: 23 21 34;
+      --android-foreground: 255 255 255;
+      --android-primary: 139 92 246;
+      --android-zinc: 228 228 231;
+      --android-gray: 147 154 165;
+    }
+  }
+}

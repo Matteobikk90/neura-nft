@@ -3,11 +3,11 @@ import { cssInterop } from "nativewind";
 import * as React from "react";
 import { Text as RNText } from "react-native";
 
-import { cn } from "@/lib/nativewindui/cn";
+import { cn } from "@/lib/theme/cn";
 
 cssInterop(RNText, { className: "style" });
 
-const textVariants = cva("text-background font-jetmono", {
+const textVariants = cva("text-foreground font-jetmono", {
   variants: {
     variant: {
       largeTitle: "text-4xl",
