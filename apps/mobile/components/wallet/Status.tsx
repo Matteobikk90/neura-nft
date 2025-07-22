@@ -8,10 +8,10 @@ import { useShallow } from "zustand/shallow";
 
 export default function WalletStatus() {
   const theme = useTheme();
-  const { address, provider, openModal } = useStore(
-    useShallow(({ address, provider, openModal }) => ({
+  const { address, providerName, openModal } = useStore(
+    useShallow(({ address, providerName, openModal }) => ({
       address,
-      provider,
+      providerName,
       openModal,
     })),
   );
@@ -27,7 +27,9 @@ export default function WalletStatus() {
         <View>
           <Text className="text-gray text-sm">Connected as</Text>
           <View className="flex flex-row items-center gap-1">
-            {provider && <Text className="text-primary">{provider}</Text>}
+            {providerName && (
+              <Text className="text-primary">{providerName}</Text>
+            )}
             <Text className="text-gray">
               {address.slice(0, 6)}...{address.slice(-4)}
             </Text>

@@ -21,11 +21,18 @@ export const useStore = create<StoreState>()(
       name: "global-store",
       storage: createJSONStorage(() => AsyncStorage),
       version: 1,
-      partialize: ({ darkMode, address, chainId, provider, icon, url }) => ({
+      partialize: ({
         darkMode,
         address,
         chainId,
-        provider,
+        providerName,
+        icon,
+        url,
+      }) => ({
+        darkMode,
+        address,
+        chainId,
+        providerName,
         icon,
         url,
       }),

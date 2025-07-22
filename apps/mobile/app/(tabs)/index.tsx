@@ -1,20 +1,13 @@
-import WalletStatus from "@/components/Wallet/Status";
-import { ThemeToggle } from "@/lib/theme/toggle";
-import { Text } from "@/lib/ui/Text";
-import { useStore } from "@/store";
+import { lazy, Suspense } from "react";
 import { View } from "react-native";
+const HomeScreen = lazy(() => import("@/screens/Home"));
 
 export default function Home() {
-  const address = useStore(({ address }) => address);
-
   return (
-    <View className="flex-1 items-center p-4">
-      {address && <WalletStatus />}
-      <Text className="mb-2 text-3xl">🧠 NeuraNFT</Text>
-      <Text className="text-center">
-        Connect your wallet and start minting personalized AI NFTs.
-      </Text>
-      <ThemeToggle />
+    <View className="flex h-full items-center justify-center">
+      <Suspense fallback={null}>
+        <HomeScreen />
+      </Suspense>
     </View>
   );
 }
