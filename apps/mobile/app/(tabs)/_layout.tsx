@@ -1,22 +1,30 @@
 import { tabs } from "@/constants/tabs";
+import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { useIsAuthenticated } from "@/hooks/useIsAuthenticated";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
   const isAuth = useIsAuthenticated();
+  const { colors } = useCustomTheme();
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#8b5cf6",
-        tabBarInactiveTintColor: "#9ca3af",
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.gray,
         tabBarStyle: {
-          backgroundColor: "#18181b",
-          borderTopWidth: 0,
+          paddingTop: 8,
+          paddingBottom: 10,
+          backgroundColor: colors.border,
+          height: 70,
+          shadowColor: colors.border,
         },
-        animation: "shift",
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
+        animation: "fade",
       }}
     >
       {tabs.map(({ name, title, icon, isProtected }) =>

@@ -2,19 +2,19 @@ export const tabs = [
   {
     name: "index",
     title: "Home",
-    icon: "home-outline",
+    icon: "home",
     isProtected: false,
   },
   {
     name: "nfts",
     title: "NFTs",
-    icon: "grid-outline",
+    icon: "grid",
     isProtected: true,
   },
   {
     name: "wallet",
     title: "Wallet",
-    icon: "wallet-outline",
+    icon: "wallet",
     isProtected: false,
   },
 ] as const;

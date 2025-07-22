@@ -3,19 +3,18 @@ import { useColorScheme as useNativewindColorScheme } from "nativewind";
 import * as React from "react";
 import { Platform } from "react-native";
 
-import { COLORS } from "@/lib/theme/colors";
-
 function useColorScheme() {
   const { colorScheme, setColorScheme: setNativewindColorScheme } =
     useNativewindColorScheme();
 
   async function setColorScheme(colorScheme: "light" | "dark") {
     setNativewindColorScheme(colorScheme);
-    if (Platform.OS !== "android") return;
-    try {
-      await setNavigationBar(colorScheme);
-    } catch (error) {
-      console.error('useColorScheme.tsx", "setColorScheme', error);
+    if (Platform.OS === "android") {
+      try {
+        await setNavigationBar(colorScheme);
+      } catch (error) {
+        console.error("Failed to set Android nav bar style", error);
+      }
     }
   }
 
@@ -28,24 +27,22 @@ function useColorScheme() {
     isDarkColorScheme: colorScheme === "dark",
     setColorScheme,
     toggleColorScheme,
-    colors: COLORS[colorScheme ?? "light"],
   };
 }
 
 function useInitialAndroidBarSync() {
   const { colorScheme } = useColorScheme();
   React.useEffect(() => {
-    if (Platform.OS !== "android") return;
-    setNavigationBar(colorScheme).catch((error) => {
-      console.error('useColorScheme.tsx", "useInitialColorScheme', error);
-    });
+    if (Platform.OS === "android") {
+      setNavigationBar(colorScheme).catch((error) => {
+        console.error("Failed to sync Android nav bar", error);
+      });
+    }
   }, [colorScheme]);
 }
 
-export { useColorScheme, useInitialAndroidBarSync };
-
-function setNavigationBar(colorScheme: "light" | "dark") {
-  return Promise.all([
+async function setNavigationBar(colorScheme: "light" | "dark") {
+  await Promise.all([
     NavigationBar.setButtonStyleAsync(
       colorScheme === "dark" ? "light" : "dark",
     ),
@@ -55,3 +52,5 @@ function setNavigationBar(colorScheme: "light" | "dark") {
     ),
   ]);
 }
+
+export { useColorScheme, useInitialAndroidBarSync };

@@ -2,12 +2,12 @@ import { CustomModal } from "@/components/CustomModal";
 import "@/config/web3";
 import "@/global.css";
 import { useLoadFonts } from "@/hooks/useLoadFonts";
-import { navTheme } from "@/lib/theme";
+import { navTheme } from "@/lib/theme/navTheme";
 import {
   useColorScheme,
   useInitialAndroidBarSync,
 } from "@/lib/theme/useColorScheme";
-import { ThemeProvider as NavThemeProvider } from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { AppKit } from "@reown/appkit-ethers5-react-native";
 import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -19,7 +19,7 @@ export { ErrorBoundary } from "expo-router";
 export default function RootLayout() {
   useInitialAndroidBarSync();
   const fontsLoaded = useLoadFonts();
-  const { colorScheme, isDarkColorScheme } = useColorScheme();
+  const { isDarkColorScheme } = useColorScheme();
 
   if (!fontsLoaded) return null;
 
@@ -30,14 +30,14 @@ export default function RootLayout() {
         style={isDarkColorScheme ? "light" : "dark"}
       />
 
-      <NavThemeProvider value={navTheme[colorScheme]}>
-        <SafeAreaView className="flex-1">
+      <ThemeProvider value={isDarkColorScheme ? navTheme.dark : navTheme.light}>
+        <SafeAreaView className="bg-background flex-1">
           <Slot />
           <AppKit />
           <Toast />
           <CustomModal />
         </SafeAreaView>
-      </NavThemeProvider>
+      </ThemeProvider>
     </>
   );
 }
