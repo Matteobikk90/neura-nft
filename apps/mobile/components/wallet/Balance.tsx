@@ -1,23 +1,25 @@
+import { useEthPriceChange } from "@/hooks/usePriceChange";
 import { Text } from "@/lib/ui/Text";
 import { useStore } from "@/store";
-import {
-  AccountController,
-  BlockchainApiController,
-} from "@reown/appkit-core-react-native";
-import { useEffect } from "react";
-import { Image, View } from "react-native";
-import { useSnapshot } from "valtio";
+import { BlockchainApiController } from "@reown/appkit-core-react-native";
+import { useEffect, useMemo } from "react";
+import { View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export function Balance() {
-  const { tokenBalance } = useSnapshot(AccountController.state);
-  const ethToken = tokenBalance?.find(({ symbol }) => symbol === "ETH");
-  const { address, chainId } = useStore(
-    useShallow(({ address, chainId }) => ({
-      address,
-      chainId,
+  const { address, chainId, tokenBalance, setTokenBalance } = useStore(
+    useShallow((state) => ({
+      address: state.address,
+      chainId: state.chainId,
+      tokenBalance: state.tokenBalance,
+      setTokenBalance: state.setTokenBalance,
     })),
   );
+  const { change: ethChange } = useEthPriceChange();
+
+  const ethToken = useMemo(() => {
+    return tokenBalance?.find((t) => t.symbol === "ETH");
+  }, [tokenBalance]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -27,31 +29,48 @@ export function Balance() {
         chainId,
       );
       if (response?.balances?.length) {
-        AccountController.setTokenBalance(response.balances);
+        setTokenBalance(response.balances);
       }
     };
     fetch();
-  }, [address, chainId]);
+  }, [address, chainId, setTokenBalance]);
 
   if (!ethToken) return null;
 
   return (
-    <View className="bg-zinc mx-4 mt-4 rounded-2xl p-4">
-      <View className="mb-2 flex-row items-center">
-        {ethToken.iconUrl && (
-          <Image source={{ uri: ethToken.iconUrl }} className="mr-2 h-6 w-6" />
+    <View className="bg-zinc mx-4 rounded-md p-6">
+      {/* Balance Header */}
+      <View className="mb-4 flex-row items-center justify-between">
+        <Text className="text-gray">Total Balance</Text>
+        {typeof ethChange === "number" && (
+          <View
+            className={`ml-auto rounded-full px-2 py-1 ${
+              ethChange >= 0 ? "bg-green-900" : "bg-red-900"
+            }`}
+          >
+            <Text
+              className={`text-xs font-medium ${
+                ethChange >= 0 ? "text-green" : "text-red"
+              }`}
+            >
+              {ethChange >= 0 ? "+" : ""}
+              {ethChange.toFixed(2)}%
+            </Text>
+          </View>
         )}
-        <Text className="text-gray text-sm">Ethereum (ETH)</Text>
       </View>
-      <Text className="text-lg font-medium">
-        {parseFloat(ethToken.quantity.numeric).toFixed(6)} ETH
+
+      <Text className="font-jetmono-semiBold text-4xl text-white">
+        ${ethToken.value?.toFixed(2)}
       </Text>
-      <Text className="text-gray text-sm">
-        ${ethToken.price.toFixed(2)} per ETH
-      </Text>
-      <Text className="text-primary mt-1 text-xl font-semibold">
-        ≈ ${ethToken.value?.toFixed(2)}
-      </Text>
+
+      <View className="flex-row items-center">
+        <Text className="text-gray text-sm">
+          {parseFloat(ethToken.quantity.numeric).toFixed(6)} ETH -
+        </Text>
+        <Text className="text-primary"> ${ethToken.price.toFixed(2)}</Text>
+        <Text className="text-gray"> per ETH</Text>
+      </View>
     </View>
   );
 }
