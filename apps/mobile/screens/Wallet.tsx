@@ -31,8 +31,8 @@ export default function WalletsScreen() {
     if (walletInfo && address && chainId) {
       setWalletInfo({
         address,
-        chainId,
-        provider: walletInfo.name ?? null,
+        chainId: String(chainId),
+        providerName: walletInfo.name ?? null,
         icon: walletInfo.icon ?? null,
         url: walletInfo.url ?? null,
       });

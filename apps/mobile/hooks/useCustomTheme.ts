@@ -5,6 +5,7 @@ export const useCustomTheme = () => {
     colors: {
       gray: string;
       zinc: string;
+      foreground: string;
     };
   };
 };
