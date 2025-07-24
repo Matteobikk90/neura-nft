@@ -2,19 +2,16 @@ import { Text } from "@/lib/ui/Text";
 import { getEthOverview } from "@/queries/token";
 import { useStore } from "@/store";
 import type { EthOverview } from "@/types/token";
-import { BlockchainApiController } from "@reown/appkit-core-react-native";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export function Balance() {
-  const { address, chainId, tokenBalance, setTokenBalance } = useStore(
+  const { address, chainId } = useStore(
     useShallow((state) => ({
       address: state.address,
       chainId: state.chainId,
-      tokenBalance: state.tokenBalance,
-      setTokenBalance: state.setTokenBalance,
     })),
   );
 
@@ -25,22 +22,8 @@ export function Balance() {
   });
 
   const ethToken = useMemo(() => {
-    return tokenBalance?.find((t) => t.symbol === "ETH");
-  }, [tokenBalance]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      if (!address || !chainId) return;
-      const response = await BlockchainApiController.getBalance(
-        address,
-        chainId,
-      );
-      if (response?.balances?.length) {
-        setTokenBalance(response.balances);
-      }
-    };
-    fetch();
-  }, [address, chainId, setTokenBalance]);
+    return data?.balances.find((t) => t.symbol === "ETH");
+  }, [data]);
 
   if (!ethToken) return null;
 
@@ -51,7 +34,7 @@ export function Balance() {
         {typeof data?.priceChange === "number" && (
           <View
             className={`rounded-md p-2 ${
-              data?.priceChange >= 0 ? "bg-green-900" : "bg-red-900"
+              data?.priceChange >= 0 ? "bg-green/20" : "bg-red/20"
             }`}
           >
             <Text

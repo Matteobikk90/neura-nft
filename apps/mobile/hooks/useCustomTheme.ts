@@ -6,6 +6,9 @@ export const useCustomTheme = () => {
       gray: string;
       zinc: string;
       foreground: string;
+      green: string;
+      red: string;
+      yellow: string;
     };
   };
 };
