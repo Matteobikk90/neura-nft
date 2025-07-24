@@ -49,7 +49,7 @@ export function Balance() {
         )}
       </View>
 
-      <Text className="font-jetmono-semiBold text-4xl text-white">
+      <Text className="font-jetmono-semiBold text-background text-4xl">
         ${ethToken.value?.toFixed(2)}
       </Text>
 

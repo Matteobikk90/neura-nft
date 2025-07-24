@@ -19,7 +19,7 @@ export default function WalletStatus() {
   if (!address) return null;
 
   return (
-    <View className="flex w-full flex-row items-center justify-between rounded-md p-4">
+    <View className="bg-zinc mx-4 flex w-full flex-row items-center justify-between rounded-md p-6">
       <View className="flex-row items-center gap-2">
         <View className="bg-primary/40 h-10 w-10 items-center justify-center rounded-md">
           <Ionicons name="wallet" size={18} color={theme.colors.primary} />
@@ -44,7 +44,7 @@ export default function WalletStatus() {
       </View>
 
       <Pressable
-        className="bg-zinc/40 h-10 w-10 items-center justify-center rounded-md"
+        className="bg-gray/40 h-10 w-10 items-center justify-center rounded-full"
         onPress={() => openModal("qr", { address })}
       >
         <Ionicons
