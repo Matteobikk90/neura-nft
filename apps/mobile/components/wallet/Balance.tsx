@@ -1,7 +1,9 @@
-import { useEthPriceChange } from "@/hooks/usePriceChange";
 import { Text } from "@/lib/ui/Text";
+import { getEthOverview } from "@/queries/token";
 import { useStore } from "@/store";
+import type { EthOverview } from "@/types/token";
 import { BlockchainApiController } from "@reown/appkit-core-react-native";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { useShallow } from "zustand/shallow";
@@ -15,7 +17,12 @@ export function Balance() {
       setTokenBalance: state.setTokenBalance,
     })),
   );
-  const { change: ethChange } = useEthPriceChange();
+
+  const { data } = useQuery<EthOverview>({
+    queryKey: ["eth-overview", address, chainId],
+    queryFn: () => getEthOverview(address!, chainId!),
+    enabled: !!address && !!chainId,
+  });
 
   const ethToken = useMemo(() => {
     return tokenBalance?.find((t) => t.symbol === "ETH");
@@ -39,22 +46,21 @@ export function Balance() {
 
   return (
     <View className="bg-zinc mx-4 rounded-md p-6">
-      {/* Balance Header */}
       <View className="mb-4 flex-row items-center justify-between">
         <Text className="text-gray">Total Balance</Text>
-        {typeof ethChange === "number" && (
+        {typeof data?.priceChange === "number" && (
           <View
-            className={`ml-auto rounded-full px-2 py-1 ${
-              ethChange >= 0 ? "bg-green-900" : "bg-red-900"
+            className={`rounded-md p-2 ${
+              data?.priceChange >= 0 ? "bg-green-900" : "bg-red-900"
             }`}
           >
             <Text
-              className={`text-xs font-medium ${
-                ethChange >= 0 ? "text-green" : "text-red"
+              className={`font-jetmono-medium text-xs ${
+                data?.priceChange >= 0 ? "text-green" : "text-red"
               }`}
             >
-              {ethChange >= 0 ? "+" : ""}
-              {ethChange.toFixed(2)}%
+              {data?.priceChange >= 0 ? "+" : ""}
+              {data?.priceChange.toFixed(2)}%
             </Text>
           </View>
         )}
@@ -66,9 +72,9 @@ export function Balance() {
 
       <View className="flex-row items-center">
         <Text className="text-gray text-sm">
-          {parseFloat(ethToken.quantity.numeric).toFixed(6)} ETH -
+          {parseFloat(ethToken.quantity.numeric).toFixed(6)} ETH
         </Text>
-        <Text className="text-primary"> ${ethToken.price.toFixed(2)}</Text>
+        <Text className="text-primary"> ≈ ${ethToken.price.toFixed(2)}</Text>
         <Text className="text-gray"> per ETH</Text>
       </View>
     </View>
