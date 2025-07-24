@@ -16,10 +16,14 @@ export default function HomeScreen() {
         </>
       )}
 
-      <Text className="mb-2 text-3xl">🧠 NeuraNFT</Text>
-      <Text className="text-center">
-        Connect your wallet and start minting personalized AI NFTs.
-      </Text>
+      {!address && (
+        <>
+          <Text className="text-center text-3xl">🧠 NeuraNFT</Text>
+          <Text className="text-center">
+            Connect your wallet and start minting personalized AI NFTs.
+          </Text>
+        </>
+      )}
     </View>
   );
 }
