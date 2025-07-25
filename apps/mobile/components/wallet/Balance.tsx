@@ -2,45 +2,22 @@ import { Text } from "@/lib/ui/Text";
 import { getEthOverview } from "@/queries/token";
 import { useStore } from "@/store";
 import type { EthOverview } from "@/types/token";
-import { BlockchainApiController } from "@reown/appkit-core-react-native";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
-import { View } from "react-native";
-import { useShallow } from "zustand/shallow";
+import { useMemo } from "react";
+import { Image, View } from "react-native";
 
 export function Balance() {
-  const { address, chainId, tokenBalance, setTokenBalance } = useStore(
-    useShallow((state) => ({
-      address: state.address,
-      chainId: state.chainId,
-      tokenBalance: state.tokenBalance,
-      setTokenBalance: state.setTokenBalance,
-    })),
-  );
+  const address = useStore(({ address }) => address);
 
   const { data } = useQuery<EthOverview>({
-    queryKey: ["eth-overview", address, chainId],
-    queryFn: () => getEthOverview(address!, chainId!),
-    enabled: !!address && !!chainId,
+    queryKey: ["eth-overview", address],
+    queryFn: () => getEthOverview(address!),
+    enabled: !!address,
   });
 
   const ethToken = useMemo(() => {
-    return tokenBalance?.find((t) => t.symbol === "ETH");
-  }, [tokenBalance]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      if (!address || !chainId) return;
-      const response = await BlockchainApiController.getBalance(
-        address,
-        chainId,
-      );
-      if (response?.balances?.length) {
-        setTokenBalance(response.balances);
-      }
-    };
-    fetch();
-  }, [address, chainId, setTokenBalance]);
+    return data?.balances.find(({ symbol }) => symbol === "ETH");
+  }, [data]);
 
   if (!ethToken) return null;
 
@@ -51,7 +28,7 @@ export function Balance() {
         {typeof data?.priceChange === "number" && (
           <View
             className={`rounded-md p-2 ${
-              data?.priceChange >= 0 ? "bg-green-900" : "bg-red-900"
+              data?.priceChange >= 0 ? "bg-green/20" : "bg-red/20"
             }`}
           >
             <Text
@@ -66,9 +43,14 @@ export function Balance() {
         )}
       </View>
 
-      <Text className="font-jetmono-semiBold text-4xl text-white">
-        ${ethToken.value?.toFixed(2)}
-      </Text>
+      <View className="flex-row items-center gap-2">
+        {ethToken.iconUrl && (
+          <Image width={20} height={20} source={{ uri: ethToken.iconUrl }} />
+        )}
+        <Text className="font-jetmono-semiBold text-background text-4xl">
+          ${ethToken.value?.toFixed(2)}
+        </Text>
+      </View>
 
       <View className="flex-row items-center">
         <Text className="text-gray text-sm">

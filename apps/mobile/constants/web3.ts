@@ -21,6 +21,6 @@ export const metadata = {
   url: "https://reown.com/appkit",
   icons: ["https://avatars.githubusercontent.com/u/179229932"],
   redirect: {
-    native: "mobile://",
+    native: "neura-nft://",
   },
 };

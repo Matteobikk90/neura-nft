@@ -19,6 +19,9 @@ export const theme = {
       zinc: withOpacity("zinc"),
       primary: withOpacity("primary"),
       gray: withOpacity("gray"),
+      green: withOpacity("green"),
+      red: withOpacity("red"),
+      yellow: withOpacity("yellow"),
     },
     fontFamily: {
       jetmono: ["JetBrainsMono-Regular", "monospace"],
