@@ -46,6 +46,9 @@ export function Transactions() {
         <FlatList
           data={showAll ? data.transactions : data.transactions.slice(0, 5)}
           keyExtractor={({ metadata }) => metadata.hash}
+          ListEmptyComponent={
+            <LottieViewWrapper type="empty" message="No recent transactions." />
+          }
           renderItem={({ item }) => {
             const transfer = item.transfers[0];
             const amount = parseFloat(transfer.quantity.numeric).toFixed(3);
