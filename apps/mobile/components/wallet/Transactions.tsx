@@ -1,3 +1,4 @@
+import { LottieViewWrapper } from "@/components/Lottie/ViewWrappet";
 import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { Text } from "@/lib/ui/Text";
 import { getEthOverview } from "@/queries/token";
@@ -22,7 +23,7 @@ export function Transactions() {
   const handleToggle = () => setShowAll((prev) => !prev);
 
   return (
-    <View className="mx-4">
+    <View>
       <View className="mb-2 flex-row items-center justify-between">
         <Text className="text-background font-jetmono-semiBold text-2xl">
           Recent Transactions
@@ -36,8 +37,10 @@ export function Transactions() {
         )}
       </View>
 
-      {isLoading && <Text className="text-gray">Loading...</Text>}
-      {error && <Text className="text-red">Failed to load transactions</Text>}
+      {isLoading && <LottieViewWrapper type="loading" message="Loading ..." />}
+      {error && (
+        <LottieViewWrapper type="error" message="Failed to load transactions" />
+      )}
 
       {data && (
         <FlatList
