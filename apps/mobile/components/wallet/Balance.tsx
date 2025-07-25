@@ -22,7 +22,7 @@ export function Balance() {
   if (!ethToken) return null;
 
   return (
-    <View className="bg-zinc mx-4 rounded-md p-6">
+    <View className="bg-zinc rounded-md p-6">
       <View className="mb-4 flex-row items-center justify-between">
         <Text className="text-gray">Total Balance</Text>
         {typeof data?.priceChange === "number" && (
