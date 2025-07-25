@@ -5,6 +5,7 @@ const defaultOptions = {
     retry: 1,
     staleTime: 60 * 60 * 1000,
     cacheTime: 2 * 60 * 60 * 1000,
+    refetchOnMount: true,
   },
 };
 

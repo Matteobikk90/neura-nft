@@ -7,3 +7,6 @@ export const formatDateTime = (minedAt: string | Date) =>
     hour: "2-digit",
     minute: "2-digit",
   });
+
+export const textFiltered = (providerName: string) =>
+  providerName.replace(/wallet/i, "").trim();

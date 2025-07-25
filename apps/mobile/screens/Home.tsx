@@ -9,7 +9,7 @@ export default function HomeScreen() {
   const address = useStore(({ address }) => address);
 
   return (
-    <View className="flex-1 gap-8 p-4">
+    <View className="bg-foreground flex-1 gap-8 p-4">
       {address && (
         <>
           <WalletStatus />
