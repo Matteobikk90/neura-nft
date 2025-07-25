@@ -2,6 +2,7 @@ import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { Text } from "@/lib/ui/Text";
 import { useStore } from "@/store";
 import { copyToClipboard } from "@/utils/clipboard";
+import { textFiltered } from "@/utils/formatter";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
@@ -28,7 +29,7 @@ export default function WalletStatus() {
           <Text className="text-gray text-sm">Connected as</Text>
           <View className="flex flex-row items-center gap-1">
             {providerName && (
-              <Text className="text-primary">{providerName}</Text>
+              <Text className="text-primary">{textFiltered(providerName)}</Text>
             )}
             <Text className="text-gray">
               {address.slice(0, 6)}...{address.slice(-4)}
@@ -37,7 +38,7 @@ export default function WalletStatus() {
               onPress={() => copyToClipboard(address, "Address copied")}
               className="items-center justify-center"
             >
-              <Ionicons name="copy" size={14} color={theme.colors.foreground} />
+              <Ionicons name="copy" size={14} color={theme.colors.background} />
             </Pressable>
           </View>
         </View>

@@ -8,27 +8,30 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
-// import { formatRelativeDateTime } from "@/utils/date";
 
 export function Transactions() {
   const theme = useCustomTheme();
   const { address, chainId } = useStore(
-    useShallow((s) => ({ address: s.address, chainId: s.chainId })),
+    useShallow(({ address, chainId }) => ({ address, chainId })),
   );
   const [showAll, setShowAll] = useState(false);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["eth-overview", address, chainId],
-    queryFn: () => getEthOverview(address!, chainId!),
+    queryFn: () => getEthOverview(address!),
     enabled: !!address && !!chainId,
   });
+
+  const handleToggle = () => setShowAll((prev) => !prev);
 
   return (
     <View className="mx-4">
       <View className="mb-2 flex-row items-center justify-between">
-        <Text className="font-jetmono-semiBold">Recent Transactions</Text>
+        <Text className="text-background font-jetmono-semiBold text-2xl">
+          Recent Transactions
+        </Text>
         {data && data.transactions.length <= 5 && (
-          <Pressable onPress={() => setShowAll((prev) => !prev)}>
+          <Pressable onPress={handleToggle}>
             <Text className="text-primary text-sm uppercase">
               {showAll ? "Show less" : "See all"}
             </Text>

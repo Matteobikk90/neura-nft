@@ -6,12 +6,9 @@ import {
   OptionsController,
 } from "@reown/appkit-core-react-native";
 
-export const getEthOverview = async (
-  address: string,
-  chainId: string,
-): Promise<EthOverview> => {
+export const getEthOverview = async (address: string): Promise<EthOverview> => {
   const [balanceRes, priceChangeRes, txRes] = await Promise.all([
-    BlockchainApiController.getBalance(address, chainId),
+    BlockchainApiController.getBalance(address),
     axiosGet<PriceChangeType>(urlEndpoints.getPriceChange),
     BlockchainApiController.fetchTransactions({
       account: address,

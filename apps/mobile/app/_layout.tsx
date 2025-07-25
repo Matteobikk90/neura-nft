@@ -33,7 +33,7 @@ export default function RootLayout() {
       />
 
       <ThemeProvider value={isDarkColorScheme ? navTheme.dark : navTheme.light}>
-        <SafeAreaView className="bg-background flex-1">
+        <SafeAreaView className="bg-foreground flex-1">
           <QueryClientProvider client={queryClient}>
             <Slot />
             <AppKit />
