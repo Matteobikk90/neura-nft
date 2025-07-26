@@ -1,3 +1,4 @@
+import { createFilterSlice } from "@/store/slices/filter";
 import { createModalSlice } from "@/store/slices/modal";
 import { createThemeSlice } from "@/store/slices/theme";
 import { createWalletSlice } from "@/store/slices/wallet";
@@ -16,6 +17,7 @@ export const useStore = create<StoreState>()(
       ...createThemeSlice(set, get, store),
       ...createWalletSlice(set, get, store),
       ...createModalSlice(set, get, store),
+      ...createFilterSlice(set, get, store),
     })),
     {
       name: "global-store",

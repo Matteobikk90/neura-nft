@@ -1,6 +1,7 @@
 type ModalPayloadMap = {
   qr: { address: string };
   confirm: { title: string; onConfirm: () => void };
+  filter: object;
 };
 
 type ModalType = keyof ModalPayloadMap;
