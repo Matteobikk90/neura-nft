@@ -4,7 +4,7 @@ import { useStore } from "@/store";
 import type { EthOverview } from "@/types/token";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { Image, View } from "react-native";
+import { View } from "react-native";
 
 export function Balance() {
   const address = useStore(({ address }) => address);
@@ -15,11 +15,13 @@ export function Balance() {
     enabled: !!address,
   });
 
-  const ethToken = useMemo(() => {
-    return data?.balances.find(({ symbol }) => symbol === "ETH");
+  const totalUsd = useMemo(() => {
+    return (
+      data?.balances.reduce((acc, { value }) => acc + (value ?? 0), 0) ?? 0
+    );
   }, [data]);
 
-  if (!ethToken) return null;
+  if (!data) return null;
 
   return (
     <View className="bg-zinc rounded-md p-6">
@@ -28,37 +30,24 @@ export function Balance() {
         {typeof data?.priceChange === "number" && (
           <View
             className={`rounded-md p-2 ${
-              data?.priceChange >= 0 ? "bg-green/20" : "bg-red/20"
+              data.priceChange >= 0 ? "bg-green/20" : "bg-red/20"
             }`}
           >
             <Text
               className={`font-jetmono-medium text-xs ${
-                data?.priceChange >= 0 ? "text-green" : "text-red"
+                data.priceChange >= 0 ? "text-green" : "text-red"
               }`}
             >
-              {data?.priceChange >= 0 ? "+" : ""}
-              {data?.priceChange.toFixed(2)}%
+              {data.priceChange >= 0 ? "+" : ""}
+              {data.priceChange.toFixed(2)}%
             </Text>
           </View>
         )}
       </View>
 
-      <View className="flex-row items-center gap-2">
-        {ethToken.iconUrl && (
-          <Image width={20} height={20} source={{ uri: ethToken.iconUrl }} />
-        )}
-        <Text className="font-jetmono-semiBold text-background text-4xl">
-          ${ethToken.value?.toFixed(2)}
-        </Text>
-      </View>
-
-      <View className="flex-row items-center">
-        <Text className="text-gray text-sm">
-          {parseFloat(ethToken.quantity.numeric).toFixed(6)} ETH
-        </Text>
-        <Text className="text-primary"> ≈ ${ethToken.price.toFixed(2)}</Text>
-        <Text className="text-gray"> per ETH</Text>
-      </View>
+      <Text className="font-jetmono-semiBold text-background text-4xl">
+        ${totalUsd.toFixed(2)}
+      </Text>
     </View>
   );
 }
