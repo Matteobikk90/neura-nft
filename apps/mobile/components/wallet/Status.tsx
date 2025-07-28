@@ -8,7 +8,7 @@ import { Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export default function WalletStatus() {
-  const theme = useCustomTheme();
+  const { colors } = useCustomTheme();
   const { address, providerName, openModal } = useStore(
     useShallow(({ address, providerName, openModal }) => ({
       address,
@@ -23,7 +23,7 @@ export default function WalletStatus() {
     <View className="bg-zinc flex w-full flex-row items-center justify-between rounded-md p-6">
       <View className="flex-row items-center gap-2">
         <View className="bg-primary/40 h-10 w-10 items-center justify-center rounded-md">
-          <Ionicons name="wallet" size={18} color={theme.colors.primary} />
+          <Ionicons name="wallet" size={18} color={colors.primary} />
         </View>
         <View>
           <Text className="text-gray text-sm">Connected as</Text>
@@ -38,7 +38,7 @@ export default function WalletStatus() {
               onPress={() => copyToClipboard(address, "Address copied")}
               className="items-center justify-center"
             >
-              <Ionicons name="copy" size={14} color={theme.colors.background} />
+              <Ionicons name="copy" size={14} color={colors.background} />
             </Pressable>
           </View>
         </View>
@@ -48,11 +48,7 @@ export default function WalletStatus() {
         className="bg-gray/40 h-10 w-10 items-center justify-center rounded-full"
         onPress={() => openModal("qr", { address })}
       >
-        <Ionicons
-          name="qr-code-sharp"
-          size={18}
-          color={theme.colors.background}
-        />
+        <Ionicons name="qr-code-sharp" size={18} color={colors.background} />
       </Pressable>
     </View>
   );

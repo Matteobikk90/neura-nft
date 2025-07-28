@@ -1,13 +1,13 @@
-import Protected from "@/components/Protected";
-import { Text } from "@/lib/ui/Text";
+import { lazy, Suspense } from "react";
 import { View } from "react-native";
+const NftsScreen = lazy(() => import("@/screens/Nfts"));
 
-export default function NFTs() {
+export default function Nfts() {
   return (
-    <Protected>
-      <View className="flex-1 items-center justify-center">
-        <Text>Your NFTs will appear here.</Text>
-      </View>
-    </Protected>
+    <View className="flex h-full items-center justify-center">
+      <Suspense fallback={null}>
+        <NftsScreen />
+      </Suspense>
+    </View>
   );
 }

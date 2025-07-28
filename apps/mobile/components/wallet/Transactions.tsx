@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
 
 export function Transactions() {
-  const theme = useCustomTheme();
+  const { colors } = useCustomTheme();
   const address = useStore(({ address }) => address);
   const [showAll, setShowAll] = useState(false);
 
@@ -30,7 +30,7 @@ export function Transactions() {
         </Text>
         {data && data.transactions.length <= 5 && (
           <Pressable onPress={handleToggle}>
-            <Text className="text-primary text-sm uppercase">
+            <Text className="text-primary text-sm">
               {showAll ? "Show less" : "See all"}
             </Text>
           </Pressable>
@@ -70,10 +70,10 @@ export function Transactions() {
                 size={18}
                 color={
                   isSwap
-                    ? theme.colors.yellow
+                    ? colors.yellow
                     : direction === "in"
-                      ? theme.colors.green
-                      : theme.colors.red
+                      ? colors.green
+                      : colors.red
                 }
               />
             );
