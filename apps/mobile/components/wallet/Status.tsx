@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
-export default function WalletStatus() {
+export function WalletStatus() {
   const { colors } = useCustomTheme();
   const { address, providerName, openModal } = useStore(
     useShallow(({ address, providerName, openModal }) => ({

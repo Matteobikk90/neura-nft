@@ -1,3 +1,4 @@
+import { createExploreSlice } from "@/store/slices/explore";
 import { createFilterSlice } from "@/store/slices/filter";
 import { createModalSlice } from "@/store/slices/modal";
 import { createThemeSlice } from "@/store/slices/theme";
@@ -18,6 +19,7 @@ export const useStore = create<StoreState>()(
       ...createWalletSlice(set, get, store),
       ...createModalSlice(set, get, store),
       ...createFilterSlice(set, get, store),
+      ...createExploreSlice(set, get, store),
     })),
     {
       name: "global-store",

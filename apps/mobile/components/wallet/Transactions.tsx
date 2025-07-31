@@ -3,16 +3,22 @@ import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { Text } from "@/lib/ui/Text";
 import { getEthOverview } from "@/queries/token";
 import { useStore } from "@/store";
+import { ExpandedSection } from "@/types/store/explore";
 import { formatDateTime } from "@/utils/formatter";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
+import { useShallow } from "zustand/shallow";
 
 export function Transactions() {
   const { colors } = useCustomTheme();
-  const address = useStore(({ address }) => address);
-  const [showAll, setShowAll] = useState(false);
+  const { address, expandedSection, setExpandedSection } = useStore(
+    useShallow(({ address, expandedSection, setExpandedSection }) => ({
+      address,
+      expandedSection,
+      setExpandedSection,
+    })),
+  );
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["eth-overview", address],
@@ -20,7 +26,12 @@ export function Transactions() {
     enabled: !!address,
   });
 
-  const handleToggle = () => setShowAll((prev) => !prev);
+  const handleToggle = () =>
+    setExpandedSection(
+      expandedSection === ExpandedSection.TRANSACTIONS
+        ? ExpandedSection.NONE
+        : ExpandedSection.TRANSACTIONS,
+    );
 
   return (
     <View>
@@ -28,10 +39,12 @@ export function Transactions() {
         <Text className="text-background font-jetmono-semiBold text-2xl">
           Recent Transactions
         </Text>
-        {data && data.transactions.length <= 5 && (
+        {data && data.transactions.length >= 5 && (
           <Pressable onPress={handleToggle}>
             <Text className="text-primary text-sm">
-              {showAll ? "Show less" : "See all"}
+              {expandedSection === ExpandedSection.TRANSACTIONS
+                ? "Show less"
+                : "See all"}
             </Text>
           </Pressable>
         )}
@@ -44,7 +57,11 @@ export function Transactions() {
 
       {data && (
         <FlatList
-          data={showAll ? data.transactions : data.transactions.slice(0, 5)}
+          data={
+            expandedSection === ExpandedSection.TRANSACTIONS
+              ? data.transactions
+              : data.transactions.slice(0, 5)
+          }
           keyExtractor={({ metadata }) => metadata.hash}
           ListEmptyComponent={
             <LottieViewWrapper type="empty" message="No recent transactions." />
