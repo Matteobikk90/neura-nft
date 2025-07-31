@@ -1,5 +1,5 @@
 import { Balance } from "@/components/Wallet/Balance";
-import WalletStatus from "@/components/Wallet/Status";
+import { WalletStatus } from "@/components/Wallet/Status";
 import { Transactions } from "@/components/Wallet/Transactions";
 import { Text } from "@/lib/ui/Text";
 import { useStore } from "@/store";

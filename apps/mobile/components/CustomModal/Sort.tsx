@@ -23,7 +23,7 @@ export function SortModal() {
   return (
     <View className="p-4">
       <Text className="font-jetmono-semiBold text-background mb-6 text-lg">
-        Sort Tokens
+        Sort tokens by:
       </Text>
 
       <View className="gap-4">

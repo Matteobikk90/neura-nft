@@ -1,5 +1,5 @@
 import { urlEndpoints } from "@/constants/urls";
-import type { EthOverview, PriceChangeType } from "@/types/token";
+import type { EthOverview, PriceChangeResponseType } from "@/types/token";
 import { axiosGet } from "@/utils/api";
 import {
   BlockchainApiController,
@@ -9,7 +9,7 @@ import {
 export const getEthOverview = async (address: string): Promise<EthOverview> => {
   const [balanceRes, priceChangeRes, txRes] = await Promise.all([
     BlockchainApiController.getBalance(address),
-    axiosGet<PriceChangeType>(urlEndpoints.getPriceChange),
+    axiosGet<PriceChangeResponseType>(urlEndpoints.getPriceChange),
     BlockchainApiController.fetchTransactions({
       account: address,
       projectId: OptionsController.state.projectId,

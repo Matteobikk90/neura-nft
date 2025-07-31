@@ -10,7 +10,7 @@ import { FlatList, Image, Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export default function TokenList() {
-  const theme = useCustomTheme();
+  const { colors } = useCustomTheme();
   const { address, openModal, tokenSortBy } = useStore(
     useShallow(({ address, openModal, tokenSortBy }) => ({
       address,
@@ -43,15 +43,18 @@ export default function TokenList() {
 
   return (
     <View className="bg-foreground w-full flex-1 p-4">
-      <View className="my-6 flex-row items-center justify-between">
-        <Text className="text-background font-jetmono-semiBold text-3xl">
-          All Tokens
-        </Text>
+      <View className="mb-6 mt-2 flex-row items-center justify-between">
+        <View>
+          <Text className="text-background font-jetmono-semiBold mb-1 text-3xl">
+            Tokens
+          </Text>
+          <Text className="text-gray text-base">All tokens in your wallet</Text>
+        </View>
         <Pressable
           className="bg-zinc flex-row items-center gap-2 rounded-full px-4 py-2"
           onPress={() => openModal("filter", {})}
         >
-          <Ionicons name="filter" size={20} color={theme.colors.background} />
+          <Ionicons name="filter" size={20} color={colors.background} />
           <Text className="text-background text-sm">Filter</Text>
         </Pressable>
       </View>
