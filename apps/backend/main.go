@@ -1,29 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 
-	"github.com/joho/godotenv"
+	"github.com/go-chi/chi/v5"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("No .env file found")
-	}
+	r := chi.NewRouter()
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "3001"
-	}
-
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "API is alive ✨")
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Neura NFT Backend is running 🚀"))
 	})
 
-	log.Printf("Server running at http://localhost:%s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Println("🚀 Server running on http://localhost:8080")
+	http.ListenAndServe(":8080", r)
 }
