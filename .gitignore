@@ -23,4 +23,4 @@ apps/contracts/artifacts/
 apps/contracts/cache/
 apps/contracts/typechain/
 apps/contracts/types/
-apps/contracts/ignition/deployments/
+apps/contracts/ignition/deployments
