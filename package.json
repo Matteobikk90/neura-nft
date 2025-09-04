@@ -2,10 +2,7 @@
   "name": "neura-nft",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "backend/*",
-    "contracts",
-    "shared"
+    "apps/*"
   ],
   "type": "module",
   "scripts": {
