@@ -24,11 +24,11 @@
     "lint-staged": "^16.1.2"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
+    "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint --fix"
     ],
-    "*.{json,md}": [
+    "*.{json,md,sol}": [
       "prettier --write"
     ]
   }
