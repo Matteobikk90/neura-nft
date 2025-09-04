@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"neura-nft/db"
 	"neura-nft/routes"
 )
 
 func main() {
+	db.Connect()
 	r := routes.NewRouter()
 
 	port := "8080"
