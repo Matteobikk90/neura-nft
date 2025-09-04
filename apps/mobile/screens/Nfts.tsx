@@ -27,8 +27,7 @@ export default function ExploreScreen() {
     })),
   );
   const showAllOwned = expandedSection === ExpandedSection.OWNED;
-  const [selectedCategory, setSelectedCategory] =
-    useState<keyof typeof nftCategories>("Art");
+  const [selectedCategory, setSelectedCategory] = useState("Art");
   const { data, isLoading, error } = useQuery({
     queryKey: ["explore-nfts", address, selectedCategory],
     queryFn: () => getExploreNFTs(address!, selectedCategory),
@@ -75,27 +74,27 @@ export default function ExploreScreen() {
             showsHorizontalScrollIndicator={false}
             className="my-6"
           >
-            {Object.keys(nftCategories).map((label) => (
+            {nftCategories.map((category) => (
               <Pressable
-                key={label}
+                key={category}
                 onPress={() => {
-                  setSelectedCategory(label as keyof typeof nftCategories);
+                  setSelectedCategory(category);
                   resetTrending();
                 }}
                 className={cn(
                   "mr-3 rounded-full px-4 py-2",
-                  selectedCategory === label ? "bg-primary" : "bg-zinc",
+                  selectedCategory === category ? "bg-primary" : "bg-zinc",
                 )}
               >
                 <Text
                   className={cn(
                     "text-sm font-jetmono-medium",
-                    selectedCategory === label
+                    selectedCategory === category
                       ? "text-background"
                       : "text-gray",
                   )}
                 >
-                  {label}
+                  {category}
                 </Text>
               </Pressable>
             ))}

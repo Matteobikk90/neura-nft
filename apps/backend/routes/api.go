@@ -15,6 +15,10 @@ func NewRouter() *chi.Mux {
 			r.Get("/balances", handlers.BalanceHandler)
 			r.Get("/transactions", handlers.TransactionsHandler)
 		})
+		r.Route("/nfts", func(r chi.Router) {
+			r.Get("/", handlers.ExploreNFTsHandler)
+		})
+
 	})
 
 	return r
