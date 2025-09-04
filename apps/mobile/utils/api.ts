@@ -1,3 +1,4 @@
+import { proxyTarget } from "@/constants/urls";
 import axios, { type AxiosRequestConfig } from "axios";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
@@ -6,23 +7,22 @@ export const axiosRequest = async <TResponse, TBody = unknown>(
   method: Method,
   url: string,
   data?: TBody,
-  signal?: AbortSignal,
-  externalConfig?: AxiosRequestConfig,
+  config: AxiosRequestConfig = {},
 ): Promise<TResponse | undefined> => {
-  const config: AxiosRequestConfig = {
-    ...externalConfig,
-    signal,
+  const finalConfig: AxiosRequestConfig = {
+    baseURL: proxyTarget,
+    ...config,
   };
 
   try {
     const response =
       method === "GET"
-        ? await axios.get<TResponse>(url, config)
+        ? await axios.get<TResponse>(url, finalConfig)
         : method === "POST"
-          ? await axios.post<TResponse>(url, data, config)
+          ? await axios.post<TResponse>(url, data, finalConfig)
           : method === "PUT"
-            ? await axios.put<TResponse>(url, data, config)
-            : await axios.delete<TResponse>(url, config);
+            ? await axios.put<TResponse>(url, data, finalConfig)
+            : await axios.delete<TResponse>(url, finalConfig);
 
     return response.data;
   } catch (error) {
@@ -42,14 +42,20 @@ export const axiosRequest = async <TResponse, TBody = unknown>(
 };
 
 // Convenience helpers
-export const axiosGet = async <T>(url: string, signal?: AbortSignal) =>
-  axiosRequest<T>("GET", url, undefined, signal);
+export const axiosGet = async <T>(url: string, config?: AxiosRequestConfig) =>
+  axiosRequest<T>("GET", url, undefined, config);
 
-export const axiosPost = async <TResponse, TBody>(url: string, data: TBody) =>
-  axiosRequest<TResponse, TBody>("POST", url, data);
+export const axiosPost = async <TResponse, TBody>(
+  url: string,
+  data: TBody,
+  config?: AxiosRequestConfig,
+) => axiosRequest<TResponse, TBody>("POST", url, data, config);
 
-export const axiosPut = async <TResponse, TBody>(url: string, data: TBody) =>
-  axiosRequest<TResponse, TBody>("PUT", url, data);
+export const axiosPut = async <TResponse, TBody>(
+  url: string,
+  data: TBody,
+  config?: AxiosRequestConfig,
+) => axiosRequest<TResponse, TBody>("PUT", url, data, config);
 
-export const axiosDelete = async (url: string, signal?: AbortSignal) =>
-  axiosRequest<void>("DELETE", url, undefined, signal);
+export const axiosDelete = async (url: string, config?: AxiosRequestConfig) =>
+  axiosRequest<void>("DELETE", url, undefined, config);

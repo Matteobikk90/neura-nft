@@ -1,15 +1,18 @@
 import { urlEndpoints } from "@/constants/urls";
-import type { EthOverview, PriceChangeResponseType } from "@/types/token";
+import type { EthOverview } from "@/types/token";
 import { axiosGet } from "@/utils/api";
 import {
   BlockchainApiController,
   OptionsController,
+  type BlockchainApiBalanceResponse,
 } from "@reown/appkit-core-react-native";
 
 export const getEthOverview = async (address: string): Promise<EthOverview> => {
   const [balanceRes, priceChangeRes, txRes] = await Promise.all([
-    BlockchainApiController.getBalance(address),
-    axiosGet<PriceChangeResponseType>(urlEndpoints.getPriceChange),
+    axiosGet<BlockchainApiBalanceResponse>(urlEndpoints.getBalances, {
+      params: { address },
+    }),
+    axiosGet<{ priceChange: number }>(urlEndpoints.getPriceChange),
     BlockchainApiController.fetchTransactions({
       account: address,
       projectId: OptionsController.state.projectId,
@@ -17,8 +20,9 @@ export const getEthOverview = async (address: string): Promise<EthOverview> => {
   ]);
 
   const balances = balanceRes?.balances ?? [];
-  const priceChange = priceChangeRes?.ethereum?.usd_24h_change;
+  console.log(balanceRes);
   const transactions = txRes?.data ?? [];
+  const priceChange = priceChangeRes?.priceChange;
 
   if (!balances.length) throw new Error("No ETH balances found");
   if (typeof priceChange !== "number")
