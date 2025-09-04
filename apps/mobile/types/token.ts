@@ -6,4 +6,4 @@ export type EthOverview = {
   transactions: Transaction[];
 };
 
-export type PriceChangeResponseType = { ethereum: { usd_24h_change: number } };
+export type PriceChangeResponseType = { priceChange: number };

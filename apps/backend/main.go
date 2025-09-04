@@ -1,19 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/go-chi/chi/v5"
+	"neura-nft/routes"
 )
 
 func main() {
-	r := chi.NewRouter()
+	r := routes.NewRouter()
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Neura NFT Backend is running 🚀"))
-	})
+	port := "8080"
+	fmt.Println("🚀 Server running on http://localhost:" + port)
 
-	log.Println("🚀 Server running on http://localhost:8080")
-	http.ListenAndServe(":8080", r)
+	if err := http.ListenAndServe(":"+port, r); err != nil {
+		log.Fatalf("Server failed to start: %v", err)
+	}
 }
