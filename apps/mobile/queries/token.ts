@@ -5,6 +5,7 @@ import {
   BlockchainApiController,
   OptionsController,
   type BlockchainApiBalanceResponse,
+  type BlockchainApiTransactionsResponse,
 } from "@reown/appkit-core-react-native";
 
 export const getEthOverview = async (address: string): Promise<EthOverview> => {
@@ -17,10 +18,12 @@ export const getEthOverview = async (address: string): Promise<EthOverview> => {
       account: address,
       projectId: OptionsController.state.projectId,
     }),
+    axiosGet<BlockchainApiTransactionsResponse>(urlEndpoints.getTransactions, {
+      params: { address },
+    }),
   ]);
 
   const balances = balanceRes?.balances ?? [];
-  console.log(balanceRes);
   const transactions = txRes?.data ?? [];
   const priceChange = priceChangeRes?.priceChange;
 

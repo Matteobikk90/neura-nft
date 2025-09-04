@@ -13,6 +13,7 @@ func NewRouter() *chi.Mux {
 		r.Route("/token", func(r chi.Router) {
 			r.Get("/price", handlers.PriceHandler)
 			r.Get("/balances", handlers.BalanceHandler)
+			r.Get("/transactions", handlers.TransactionsHandler)
 		})
 	})
 
