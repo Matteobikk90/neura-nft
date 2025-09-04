@@ -16,3 +16,10 @@ build
 # Misc
 *.DS_Store
 *.log
+
+# Solidity
+artifacts/
+cache/
+typechain/
+types/
+ignition/deployments/
