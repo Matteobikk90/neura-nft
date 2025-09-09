@@ -21,15 +21,20 @@
     "eslint-plugin-tailwindcss": "^3.18.2",
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "^8.0.0",
-    "lint-staged": "^16.1.2"
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-solidity": "^2.1.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint --fix"
     ],
-    "*.{json,md,sol}": [
+    "*.{json,md}": [
       "prettier --write"
+    ],
+    "*.{sol}": [
+      "prettier --plugin=prettier-plugin-solidity --write"
     ]
   }
 }
