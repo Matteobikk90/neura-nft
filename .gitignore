@@ -8,6 +8,7 @@ node_modules
 web-build
 dist
 build
+expo-env.d.ts
 
 # Env
 .env
@@ -16,3 +17,10 @@ build
 # Misc
 *.DS_Store
 *.log
+
+# Solidity
+apps/contracts/artifacts/
+apps/contracts/cache/
+apps/contracts/typechain/
+apps/contracts/types/
+apps/contracts/ignition/deployments
