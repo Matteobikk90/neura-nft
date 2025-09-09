@@ -5,13 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"neura-nft/config"
 	"neura-nft/models"
-	"os"
 )
 
 func GetTransactions(address string) ([]map[string]interface{}, error) {
-	apiKey := os.Getenv("ALCHEMY_API_KEY")
-	url := fmt.Sprintf("https://eth-mainnet.g.alchemy.com/v2/%s", apiKey)
+	url := fmt.Sprintf("https://eth-mainnet.g.alchemy.com/v2/%s", config.AlchemyApiKey)
 
 	payload := map[string]interface{}{
 		"jsonrpc": "2.0",

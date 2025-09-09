@@ -12,5 +12,6 @@
     "expo-env.d.ts",
     "nativewind-env.d.ts",
     "tailwind.config.js"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }

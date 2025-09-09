@@ -5,13 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"neura-nft/config"
 	"neura-nft/models"
-	"os"
 )
 
 func callAlchemy(method string, params []interface{}) (json.RawMessage, error) {
-	apiKey := os.Getenv("ALCHEMY_API_KEY")
-	url := fmt.Sprintf("https://eth-mainnet.g.alchemy.com/v2/%s", apiKey)
+	url := fmt.Sprintf("https://eth-mainnet.g.alchemy.com/v2/%s", config.AlchemyApiKey)
 
 	req := models.RpcRequest{JSONRPC: "2.0", ID: 1, Method: method, Params: params}
 	body, _ := json.Marshal(req)
