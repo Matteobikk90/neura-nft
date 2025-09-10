@@ -17,10 +17,16 @@ export const tabs = [
     icon: "grid",
     isProtected: true,
   },
+  // {
+  //   name: "wallet",
+  //   title: "Wallet",
+  //   icon: "wallet",
+  //   isProtected: false,
+  // },
   {
-    name: "wallet",
-    title: "Wallet",
-    icon: "wallet",
+    name: "profile",
+    title: "Profile",
+    icon: "person",
     isProtected: false,
   },
 ] as const;

@@ -11,8 +11,6 @@ func ExploreNFTsHandler(w http.ResponseWriter, r *http.Request) {
 	address := r.URL.Query().Get("address")
 	category := r.URL.Query().Get("category")
 
-	fmt.Println("➡️ ExploreNFTsHandler called with", "address:", address, "category:", category)
-
 	if address == "" || category == "" {
 		http.Error(w, "missing address or category", http.StatusBadRequest)
 		return
@@ -24,9 +22,6 @@ func ExploreNFTsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	fmt.Println("✅ Owned NFTs:", len(owned))
-	fmt.Println("✅ Trending NFTs:", len(trending))
 
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(map[string]any{

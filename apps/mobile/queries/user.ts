@@ -1,9 +1,9 @@
 import { urlEndpoints } from "@/constants/urls";
-import type { UserPayloadType } from "@/types/user";
+import type { UserPayloadType, UserResponseType } from "@/types/user";
 import { axiosGet, axiosPost } from "@/utils/api";
 
 export async function getUser(address: string) {
-  return axiosGet<UserPayloadType>(urlEndpoints.user, {
+  return axiosGet<UserResponseType>(urlEndpoints.user, {
     params: { address },
   });
 }

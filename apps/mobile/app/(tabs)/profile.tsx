@@ -1,12 +1,12 @@
 import { lazy, Suspense } from "react";
 import { View } from "react-native";
-const WalletScreen = lazy(() => import("@/screens/Wallet"));
+const ProfileScreen = lazy(() => import("@/screens/Profile"));
 
-export default function Wallet() {
+export default function Profile() {
   return (
     <View className="flex h-full items-center justify-center">
       <Suspense fallback={null}>
-        <WalletScreen />
+        <ProfileScreen />
       </Suspense>
     </View>
   );

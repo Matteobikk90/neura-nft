@@ -1,11 +1,11 @@
 import { tabs } from "@/constants/tabs";
 import { useCustomTheme } from "@/hooks/useCustomTheme";
-import { useIsAuthenticated } from "@/hooks/useIsAuthenticated";
+import { useWalletLifecycle } from "@/hooks/useWalletLifecycle";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
-  const isAuth = useIsAuthenticated();
+  const { isAuthenticated } = useWalletLifecycle();
   const { colors } = useCustomTheme();
 
   return (
@@ -29,7 +29,7 @@ export default function TabsLayout() {
     >
       {tabs.map(({ name, title, icon, isProtected }) =>
         isProtected ? (
-          <Tabs.Protected key={name} guard={isAuth}>
+          <Tabs.Protected key={name} guard={isAuthenticated}>
             <Tabs.Screen
               name={name}
               options={{

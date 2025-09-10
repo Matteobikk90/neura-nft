@@ -1,4 +1,3 @@
-import { Text } from "@/lib/ui/Text";
 import { upsertUser } from "@/queries/user";
 import { useStore } from "@/store";
 import {
@@ -10,24 +9,24 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useEffect } from "react";
-import { Pressable } from "react-native";
 import Toast from "react-native-toast-message";
 import { useShallow } from "zustand/shallow";
 
-export default function WalletsScreen() {
-  const { setWalletInfo, clearWalletInfo } = useStore(
-    useShallow(({ setWalletInfo, clearWalletInfo }) => ({
+export function useWalletLifecycle() {
+  const { setWalletInfo, clearWalletInfo, address } = useStore(
+    useShallow(({ setWalletInfo, clearWalletInfo, address }) => ({
       setWalletInfo,
       clearWalletInfo,
+      address,
     })),
   );
-  const { mutate } = useMutation({
-    mutationFn: upsertUser,
-  });
-  const { open } = useAppKit();
+
   const { walletInfo } = useWalletInfo();
-  const { address, chainId } = useAppKitAccount();
+  const { chainId } = useAppKitAccount();
+  const { open } = useAppKit();
   const { disconnect } = useDisconnect();
+
+  const { mutate } = useMutation({ mutationFn: upsertUser });
 
   const isAuthenticated = !!address;
 
@@ -40,6 +39,7 @@ export default function WalletsScreen() {
         icon: walletInfo.icon ?? null,
         url: walletInfo.url ?? null,
       });
+
       mutate({
         address,
         chainId: String(chainId),
@@ -47,11 +47,13 @@ export default function WalletsScreen() {
         icon: walletInfo.icon ?? null,
         url: walletInfo.url ?? null,
       });
+
       Toast.show({
         type: "success",
         text1: "Wallet connected",
         text2: `${walletInfo.name ?? "Wallet"} connected successfully`,
       });
+
       router.replace("/");
     }
   }, [address, chainId, walletInfo, setWalletInfo, mutate]);
@@ -70,9 +72,5 @@ export default function WalletsScreen() {
     }
   };
 
-  return (
-    <Pressable onPress={handlePress}>
-      <Text>{isAuthenticated ? "Disconnect Wallet" : "Connect Wallet"}</Text>
-    </Pressable>
-  );
+  return { isAuthenticated, address, walletInfo, handlePress };
 }

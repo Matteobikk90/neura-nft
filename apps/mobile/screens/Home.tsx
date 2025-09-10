@@ -9,16 +9,14 @@ export default function HomeScreen() {
   const address = useStore(({ address }) => address);
 
   return (
-    <View className="bg-foreground flex-1 gap-8 p-4">
-      {address && (
+    <View className="bg-background flex-1 gap-8 p-4">
+      {address ? (
         <>
           <WalletStatus />
           <Balance />
           <Transactions />
         </>
-      )}
-
-      {!address && (
+      ) : (
         <>
           <Text className="text-center text-3xl">🧠 NeuraNFT</Text>
           <Text className="text-center">
