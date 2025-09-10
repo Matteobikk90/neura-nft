@@ -5,4 +5,5 @@ export const urlEndpoints = {
   getBalances: "/api/token/balances",
   getTransactions: "/api/token/transactions",
   getNFTs: "/api/nfts",
+  user: "/api/user",
 };

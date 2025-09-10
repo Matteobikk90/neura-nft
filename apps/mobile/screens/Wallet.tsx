@@ -1,4 +1,5 @@
 import { Text } from "@/lib/ui/Text";
+import { upsertUser } from "@/queries/user";
 import { useStore } from "@/store";
 import {
   useAppKit,
@@ -6,6 +7,7 @@ import {
   useDisconnect,
   useWalletInfo,
 } from "@reown/appkit-ethers5-react-native";
+import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { Pressable } from "react-native";
@@ -19,7 +21,9 @@ export default function WalletsScreen() {
       clearWalletInfo,
     })),
   );
-
+  const { mutate } = useMutation({
+    mutationFn: upsertUser,
+  });
   const { open } = useAppKit();
   const { walletInfo } = useWalletInfo();
   const { address, chainId } = useAppKitAccount();
@@ -36,6 +40,13 @@ export default function WalletsScreen() {
         icon: walletInfo.icon ?? null,
         url: walletInfo.url ?? null,
       });
+      mutate({
+        address,
+        chainId: String(chainId),
+        provider: walletInfo.name ?? null,
+        icon: walletInfo.icon ?? null,
+        url: walletInfo.url ?? null,
+      });
       Toast.show({
         type: "success",
         text1: "Wallet connected",
@@ -43,7 +54,7 @@ export default function WalletsScreen() {
       });
       router.replace("/");
     }
-  }, [address, chainId, walletInfo, setWalletInfo]);
+  }, [address, chainId, walletInfo, setWalletInfo, mutate]);
 
   const handlePress = () => {
     if (isAuthenticated) {
