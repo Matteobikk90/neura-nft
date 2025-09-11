@@ -6,6 +6,12 @@ export const tabs = [
     isProtected: false,
   },
   {
+    name: "wallet",
+    title: "Wallet",
+    icon: "wallet",
+    isProtected: true,
+  },
+  {
     name: "tokens",
     title: "Tokens",
     icon: "bar-chart",
@@ -17,12 +23,6 @@ export const tabs = [
     icon: "grid",
     isProtected: true,
   },
-  // {
-  //   name: "wallet",
-  //   title: "Wallet",
-  //   icon: "wallet",
-  //   isProtected: false,
-  // },
   {
     name: "profile",
     title: "Profile",

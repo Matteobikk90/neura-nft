@@ -46,7 +46,9 @@ export default function ExploreScreen() {
     <View className="bg-foreground flex-1 px-4 pt-6">
       <View className="mb-6 flex-row items-center justify-between">
         <View>
-          <Text className="text-background text-2xl font-bold">Explore</Text>
+          <Text className="text-background font-jetmono-semiBold text-2xl">
+            Explore
+          </Text>
           <Text className="text-gray">Discover NFTs</Text>
         </View>
         <View className="flex-row items-center gap-4">

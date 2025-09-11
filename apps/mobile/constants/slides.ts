@@ -1,17 +1,23 @@
+import balanceImage from "@/assets/images/balance.jpeg";
+import nftsImage from "@/assets/images/nfts.jpeg";
+import tokenImage from "@/assets/images/token.jpeg";
+
 export const sliderItems = [
   {
-    uri: "https://picsum.photos/800/400?random=1",
+    uri: balanceImage,
+    title: "Home",
+    description:
+      "See your total wallet balance and latest transactions at a glance.",
+  },
+  {
+    uri: tokenImage,
     title: "Tokens",
-    description: "Track your balances and monitor real-time transactions.",
+    description:
+      "Track all your ERC-20 tokens, balances, and real-time values.",
   },
   {
-    uri: "https://picsum.photos/800/400?random=2",
+    uri: nftsImage,
     title: "NFTs",
-    description: "Explore trending collections and view your own NFTs.",
-  },
-  {
-    uri: "https://picsum.photos/800/400?random=3",
-    title: "Profile",
-    description: "Manage your wallet, settings, and profile details.",
+    description: "Discover trending NFTs and manage your personal collection.",
   },
 ];
