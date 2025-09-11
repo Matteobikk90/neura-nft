@@ -1,12 +1,13 @@
 import { LottieViewWrapper } from "@/components/Lottie/ViewWrappet";
 import { ConnectBtn } from "@/components/Wallet/ConnectBtn";
+import { features } from "@/constants/variables";
 import { useWalletLifecycle } from "@/hooks/useWalletLifecycle";
 import { Text } from "@/lib/ui/Text";
 import { getUser } from "@/queries/user";
 import { useStore } from "@/store";
 
 import { useQuery } from "@tanstack/react-query";
-import { Image, Linking, Pressable, View } from "react-native";
+import { FlatList, Image, Linking, Pressable, View } from "react-native";
 
 export default function ProfileScreen() {
   const address = useStore(({ address }) => address);
@@ -20,8 +21,21 @@ export default function ProfileScreen() {
 
   if (!isAuthenticated) {
     return (
-      <View className="flex-1 items-center justify-center p-6">
-        <ConnectBtn />
+      <View className="bg-background w-full flex-1 p-4">
+        <Text className="font-jetmono-semiBold my-12 text-center text-3xl">
+          Profile
+        </Text>
+        <View className="bg-foreground flex gap-4 rounded-md p-6 shadow-lg">
+          <FlatList
+            data={features}
+            keyExtractor={(item) => item}
+            renderItem={({ item }) => (
+              <Text className="text-background mb-2">• {item}</Text>
+            )}
+            scrollEnabled={false}
+          />
+          <ConnectBtn className="mx-auto" />
+        </View>
       </View>
     );
   }
