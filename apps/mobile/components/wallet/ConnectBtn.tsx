@@ -1,4 +1,5 @@
 // components/Wallet/ConnectBtn.tsx
+import { queryClient } from "@/config/queryClient";
 import { cn } from "@/lib/theme/cn";
 import { Text } from "@/lib/ui/Text";
 import { upsertUser } from "@/queries/user";
@@ -10,17 +11,17 @@ import {
   useWalletInfo,
 } from "@reown/appkit-ethers5-react-native";
 import { useMutation } from "@tanstack/react-query";
-import { router } from "expo-router";
 import { useEffect } from "react";
 import { Pressable } from "react-native";
 import Toast from "react-native-toast-message";
 import { useShallow } from "zustand/shallow";
 
 export function ConnectBtn({ className }: { className?: string }) {
-  const { setWalletInfo, clearWalletInfo } = useStore(
-    useShallow(({ setWalletInfo, clearWalletInfo }) => ({
+  const { setWalletInfo, clearWalletInfo, providerName } = useStore(
+    useShallow(({ setWalletInfo, clearWalletInfo, providerName }) => ({
       setWalletInfo,
       clearWalletInfo,
+      providerName,
     })),
   );
   const { walletInfo } = useWalletInfo();
@@ -29,6 +30,10 @@ export function ConnectBtn({ className }: { className?: string }) {
   const { disconnect } = useDisconnect();
   const { mutate } = useMutation({
     mutationFn: upsertUser,
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["user", address, providerName],
+      }),
   });
 
   const isAuthenticated = !!address;
@@ -68,8 +73,6 @@ export function ConnectBtn({ className }: { className?: string }) {
         text1: "Wallet connected",
         text2: `${walletInfo.name ?? "Wallet"} connected successfully`,
       });
-
-      router.replace("/");
     }
   }, [address, chainId, walletInfo, mutate, setWalletInfo]);
 

@@ -1,20 +1,27 @@
 import { LottieViewWrapper } from "@/components/Lottie/ViewWrappet";
 import { ConnectBtn } from "@/components/Wallet/ConnectBtn";
 import { features } from "@/constants/variables";
+import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { useWalletLifecycle } from "@/hooks/useWalletLifecycle";
 import { Text } from "@/lib/ui/Text";
 import { getUser } from "@/queries/user";
 import { useStore } from "@/store";
+import { copyToClipboard } from "@/utils/clipboard";
+import { Ionicons } from "@expo/vector-icons";
 
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, Image, Linking, Pressable, View } from "react-native";
+import { useShallow } from "zustand/shallow";
 
 export default function ProfileScreen() {
-  const address = useStore(({ address }) => address);
+  const { colors } = useCustomTheme();
+  const { address, providerName } = useStore(
+    useShallow(({ address, providerName }) => ({ address, providerName })),
+  );
   const { isAuthenticated } = useWalletLifecycle();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["user", address],
+    queryKey: ["user", address, providerName],
     queryFn: () => getUser(address!),
     enabled: isAuthenticated,
   });
@@ -52,29 +59,51 @@ export default function ProfileScreen() {
     <View style={{ padding: 20, alignItems: "center" }}>
       {data.icon && (
         <Image
+          className="mb-3"
           source={{ uri: data.icon }}
-          style={{ width: 60, height: 60, marginBottom: 12 }}
+          width={60}
+          height={60}
           resizeMode="contain"
         />
       )}
 
-      <Text style={{ marginBottom: 6 }}>{data.provider || "Wallet"}</Text>
-
-      {data.url && (
-        <Pressable onPress={() => Linking.openURL(data.url!)}>
-          <Text style={{ color: "#8B5CF6" }}>{data.url}</Text>
-        </Pressable>
-      )}
-
-      <Text style={{ marginTop: 12 }}>
-        Address: {data.address.slice(0, 6)}...{data.address.slice(-4)}
-      </Text>
-      <Text>Chain ID: {data.chainId}</Text>
-      <Text style={{ marginTop: 6, opacity: 0.7 }}>
-        Last login: {new Date(data.lastLoginAt * 1000).toLocaleString()}
-      </Text>
-
-      <ConnectBtn className="mt-4" />
+      <View className="gap-4">
+        <View className="w-full flex-row justify-between">
+          <Text className="font-jetmono-semiBold">Wallet:</Text>
+          <Text>{data.provider}</Text>
+        </View>
+        {data.url && (
+          <View className="w-full flex-row justify-between">
+            <Text className="font-jetmono-semiBold">Url:</Text>
+            <Pressable onPress={() => Linking.openURL(data.url!)}>
+              <Text className="text-primary underline">{data.url}</Text>
+            </Pressable>
+          </View>
+        )}
+        <View className="w-full flex-row justify-between">
+          <Text className="font-jetmono-semiBold">Address:</Text>
+          <View className="flex flex-row items-center gap-2">
+            <Pressable
+              onPress={() => copyToClipboard(data.address, "Address copied")}
+              className="items-center justify-center"
+            >
+              <Ionicons name="copy" size={14} color={colors.foreground} />
+            </Pressable>
+            <Text className="text-gray">
+              {data.address.slice(0, 10)}...{data.address.slice(-6)}
+            </Text>
+          </View>
+        </View>
+        <View className="w-full flex-row justify-between">
+          <Text className="font-jetmono-semiBold">Chain ID:</Text>
+          <Text>{data.chainId}</Text>
+        </View>
+        <View className="w-full flex-row justify-between">
+          <Text className="font-jetmono-semiBold">Last login:</Text>
+          <Text>{new Date(data.lastLoginAt * 1000).toLocaleString()}</Text>
+        </View>
+      </View>
+      <ConnectBtn className="mt-8" />
     </View>
   );
 }
