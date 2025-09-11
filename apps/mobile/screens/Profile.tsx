@@ -74,7 +74,7 @@ export default function ProfileScreen() {
         Last login: {new Date(data.lastLoginAt * 1000).toLocaleString()}
       </Text>
 
-      <ConnectBtn />
+      <ConnectBtn className="mt-4" />
     </View>
   );
 }
