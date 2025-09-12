@@ -1,78 +1,14 @@
-import { Text } from "@/lib/ui/Text";
-import { upsertUser } from "@/queries/user";
-import { useStore } from "@/store";
-import {
-  useAppKit,
-  useAppKitAccount,
-  useDisconnect,
-  useWalletInfo,
-} from "@reown/appkit-ethers5-react-native";
-import { useMutation } from "@tanstack/react-query";
-import { router } from "expo-router";
-import { useEffect } from "react";
-import { Pressable } from "react-native";
-import Toast from "react-native-toast-message";
-import { useShallow } from "zustand/shallow";
+import { Balance } from "@/components/Wallet/Balance";
+import { WalletStatus } from "@/components/Wallet/Status";
+import { Transactions } from "@/components/Wallet/Transactions";
+import { View } from "react-native";
 
-export default function WalletsScreen() {
-  const { setWalletInfo, clearWalletInfo } = useStore(
-    useShallow(({ setWalletInfo, clearWalletInfo }) => ({
-      setWalletInfo,
-      clearWalletInfo,
-    })),
-  );
-  const { mutate } = useMutation({
-    mutationFn: upsertUser,
-  });
-  const { open } = useAppKit();
-  const { walletInfo } = useWalletInfo();
-  const { address, chainId } = useAppKitAccount();
-  const { disconnect } = useDisconnect();
-
-  const isAuthenticated = !!address;
-
-  useEffect(() => {
-    if (walletInfo && address && chainId) {
-      setWalletInfo({
-        address,
-        chainId: String(chainId),
-        providerName: walletInfo.name ?? null,
-        icon: walletInfo.icon ?? null,
-        url: walletInfo.url ?? null,
-      });
-      mutate({
-        address,
-        chainId: String(chainId),
-        provider: walletInfo.name ?? null,
-        icon: walletInfo.icon ?? null,
-        url: walletInfo.url ?? null,
-      });
-      Toast.show({
-        type: "success",
-        text1: "Wallet connected",
-        text2: `${walletInfo.name ?? "Wallet"} connected successfully`,
-      });
-      router.replace("/");
-    }
-  }, [address, chainId, walletInfo, setWalletInfo, mutate]);
-
-  const handlePress = () => {
-    if (isAuthenticated) {
-      disconnect();
-      clearWalletInfo();
-      Toast.show({
-        type: "info",
-        text1: "Disconnected",
-        text2: "Wallet disconnected",
-      });
-    } else {
-      open();
-    }
-  };
-
+export default function WalletScreen() {
   return (
-    <Pressable onPress={handlePress}>
-      <Text>{isAuthenticated ? "Disconnect Wallet" : "Connect Wallet"}</Text>
-    </Pressable>
+    <View className="bg-background flex-1 gap-8 p-4">
+      <WalletStatus />
+      <Balance />
+      <Transactions />
+    </View>
   );
 }

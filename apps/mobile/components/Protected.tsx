@@ -1,11 +1,11 @@
-import { useIsAuthenticated } from "@/hooks/useIsAuthenticated";
+import { useWalletLifecycle } from "@/hooks/useWalletLifecycle";
 import { router } from "expo-router";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import Toast from "react-native-toast-message";
 
 export default function Protected({ children }: { children: ReactNode }) {
-  const isAuth = useIsAuthenticated();
+  const isAuth = useWalletLifecycle();
 
   useEffect(() => {
     if (!isAuth) {
@@ -14,7 +14,7 @@ export default function Protected({ children }: { children: ReactNode }) {
         text1: "Access Denied",
         text2: "Please connect your wallet to use this feature",
       });
-      router.replace("/wallet");
+      router.replace("/profile");
 
       //   const timeout = setTimeout(() => {
       //       router.replace("/wallet");

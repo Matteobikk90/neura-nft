@@ -6,6 +6,12 @@ export const tabs = [
     isProtected: false,
   },
   {
+    name: "wallet",
+    title: "Wallet",
+    icon: "wallet",
+    isProtected: true,
+  },
+  {
     name: "tokens",
     title: "Tokens",
     icon: "bar-chart",
@@ -18,9 +24,9 @@ export const tabs = [
     isProtected: true,
   },
   {
-    name: "wallet",
-    title: "Wallet",
-    icon: "wallet",
+    name: "profile",
+    title: "Profile",
+    icon: "person",
     isProtected: false,
   },
 ] as const;

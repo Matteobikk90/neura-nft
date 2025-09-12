@@ -1,3 +1,4 @@
+import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { Text } from "@/lib/ui/Text";
 import { useStore } from "@/store";
 import { copyToClipboard } from "@/utils/clipboard";
@@ -7,6 +8,7 @@ import QRCode from "react-native-qrcode-svg";
 
 export const QrModal = () => {
   const data = useStore(({ data }) => data);
+  const { colors } = useCustomTheme();
 
   return (
     data &&
@@ -20,7 +22,7 @@ export const QrModal = () => {
             onPress={() => copyToClipboard(data.address, "Address copied")}
             className="items-center justify-center"
           >
-            <Ionicons name="copy" size={14} color="white" />
+            <Ionicons name="copy" size={14} color={colors.background} />
           </Pressable>
         </View>
       </>

@@ -5,3 +5,9 @@ export type UserPayloadType = {
   icon?: string | null;
   url?: string | null;
 };
+
+export type UserResponseType = UserPayloadType & {
+  _id: string;
+  createdAt: number;
+  lastLoginAt: number;
+};

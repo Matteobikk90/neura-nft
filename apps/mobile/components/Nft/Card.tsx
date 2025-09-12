@@ -11,7 +11,7 @@ export function NFTCard({ image, title, creator }: NFTCardType) {
         resizeMode="cover"
       />
       <Text
-        className="text-background mt-2 px-2 text-sm font-bold"
+        className="text-background font-jetmono-semiBold mt-2 px-2 text-sm"
         numberOfLines={1}
       >
         {title}

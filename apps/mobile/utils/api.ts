@@ -31,9 +31,6 @@ export const axiosRequest = async <TResponse, TBody = unknown>(
         console.warn("Request canceled");
         return undefined;
       }
-      console.error(
-        `Axios error: ${error.response?.status || "Unknown"} - ${error.message}`,
-      );
     } else {
       console.error("Unexpected error occurred", error);
     }
