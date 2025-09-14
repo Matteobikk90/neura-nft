@@ -1,4 +1,4 @@
-import { tabs } from "@/constants/tabs";
+import { privateTabs, publicTabs } from "@/constants/tabs";
 import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { useWalletLifecycle } from "@/hooks/useWalletLifecycle";
 import { Ionicons } from "@expo/vector-icons";
@@ -27,20 +27,8 @@ export default function TabsLayout() {
         animation: "fade",
       }}
     >
-      {tabs.map(({ name, title, icon, isProtected }) =>
-        isProtected ? (
-          <Tabs.Protected key={name} guard={isAuthenticated}>
-            <Tabs.Screen
-              name={name}
-              options={{
-                title,
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name={icon} size={size} color={color} />
-                ),
-              }}
-            />
-          </Tabs.Protected>
-        ) : (
+      <Tabs.Protected guard={isAuthenticated}>
+        {privateTabs.map(({ name, title, icon }) => (
           <Tabs.Screen
             key={name}
             name={name}
@@ -51,8 +39,33 @@ export default function TabsLayout() {
               ),
             }}
           />
-        ),
-      )}
+        ))}
+      </Tabs.Protected>
+
+      <Tabs.Protected guard={!isAuthenticated}>
+        {publicTabs.map(({ name, title, icon }) => (
+          <Tabs.Screen
+            key={name}
+            name={name}
+            options={{
+              title,
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name={icon} size={size} color={color} />
+              ),
+            }}
+          />
+        ))}
+      </Tabs.Protected>
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

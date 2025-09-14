@@ -1,32 +1,25 @@
-export const tabs = [
+export const publicTabs = [
   {
     name: "index",
     title: "Home",
     icon: "home",
-    isProtected: false,
   },
+] as const;
+
+export const privateTabs = [
   {
     name: "wallet",
     title: "Wallet",
     icon: "wallet",
-    isProtected: true,
   },
   {
     name: "tokens",
     title: "Tokens",
     icon: "bar-chart",
-    isProtected: true,
   },
   {
     name: "nfts",
     title: "NFTs",
     icon: "grid",
-    isProtected: true,
-  },
-  {
-    name: "profile",
-    title: "Profile",
-    icon: "person",
-    isProtected: false,
   },
 ] as const;
