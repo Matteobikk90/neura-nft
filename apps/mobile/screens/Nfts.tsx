@@ -19,12 +19,15 @@ import { useShallow } from "zustand/shallow";
 export default function ExploreScreen() {
   const { colors } = useCustomTheme();
 
-  const { address, expandedSection, setExpandedSection } = useStore(
-    useShallow(({ address, expandedSection, setExpandedSection }) => ({
-      address,
-      expandedSection,
-      setExpandedSection,
-    })),
+  const { address, expandedSection, setExpandedSection, openModal } = useStore(
+    useShallow(
+      ({ address, expandedSection, setExpandedSection, openModal }) => ({
+        address,
+        expandedSection,
+        setExpandedSection,
+        openModal,
+      }),
+    ),
   );
   const showAllOwned = expandedSection === ExpandedSection.OWNED;
   const [selectedCategory, setSelectedCategory] = useState("Art");
@@ -51,14 +54,15 @@ export default function ExploreScreen() {
           </Text>
           <Text className="text-gray">Discover NFTs</Text>
         </View>
-        <View className="flex-row items-center gap-4">
-          <Ionicons name="search" size={22} color={colors.background} />
-          <Ionicons
-            name="person-circle-outline"
-            size={26}
-            color={colors.background}
-          />
-        </View>
+        <Pressable
+          onPress={() => openModal("mint", {})}
+          className={cn(
+            "rounded-md px-4 py-2 bg-primary flex-row items-center justify-between gap-4",
+          )}
+        >
+          <Ionicons name="rocket-outline" size={22} color={colors.foreground} />
+          <Text>Mint NFT</Text>
+        </Pressable>
       </View>
 
       <WalletStatus />
@@ -92,7 +96,7 @@ export default function ExploreScreen() {
                   className={cn(
                     "text-sm font-jetmono-medium",
                     selectedCategory === category
-                      ? "text-background"
+                      ? "text-foreground"
                       : "text-gray",
                   )}
                 >

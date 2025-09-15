@@ -1,3 +1,4 @@
+import { MintModal } from "@/components/CustomModal/MintModal";
 import { QrModal } from "@/components/CustomModal/Qr";
 import { SortModal } from "@/components/CustomModal/Sort";
 import { useStore } from "@/store";
@@ -25,6 +26,7 @@ export function CustomModal() {
         </Pressable>
         {type === "qr" && <QrModal />}
         {type === "filter" && <SortModal />}
+        {type === "mint" && <MintModal />}
       </View>
     </Modal>
   );

@@ -2,6 +2,7 @@ type ModalPayloadMap = {
   qr: { address: string };
   confirm: { title: string; onConfirm: () => void };
   filter: object;
+  mint: { collectionId?: string } | undefined;
 };
 
 type ModalType = keyof ModalPayloadMap;

@@ -15,11 +15,11 @@ export const privateTabs = [
   {
     name: "tokens",
     title: "Tokens",
-    icon: "bar-chart",
+    icon: "sparkles",
   },
   {
     name: "nfts",
     title: "NFTs",
-    icon: "grid",
+    icon: "image",
   },
 ] as const;
