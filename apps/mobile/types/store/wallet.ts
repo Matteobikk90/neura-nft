@@ -4,6 +4,8 @@ export type WalletSliceType = {
   providerName: string | null;
   icon: string | null;
   url: string | null;
-  setWalletInfo: (info: Partial<WalletSliceType>) => void;
+  setWalletInfo: (
+    info: Partial<Omit<WalletSliceType, "setWalletInfo" | "clearWalletInfo">>,
+  ) => void;
   clearWalletInfo: () => void;
 };
