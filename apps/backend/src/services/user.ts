@@ -1,9 +1,8 @@
-import prisma from "@/config/prisma";
+import { getDb } from "@/config/mongo";
 
 export async function findUserByAddress(address: string) {
-  return prisma.user.findUnique({
-    where: { address: address.toLowerCase() },
-  });
+  const db = getDb();
+  return db.collection("users").findOne({ address: address.toLowerCase() });
 }
 
 export async function upsertUser(data: {
@@ -13,25 +12,25 @@ export async function upsertUser(data: {
   icon?: string | null;
   url?: string | null;
 }) {
+  const db = getDb();
   const now = Math.floor(Date.now() / 1000);
 
-  return prisma.user.upsert({
-    where: { address: data.address.toLowerCase() },
-    update: {
-      chainId: data.chainId,
-      provider: data.provider,
-      icon: data.icon,
-      url: data.url,
-      lastLoginAt: now,
+  await db.collection("users").updateOne(
+    { address: data.address.toLowerCase() },
+    {
+      $set: {
+        ...data,
+        address: data.address.toLowerCase(),
+        lastLoginAt: now,
+      },
+      $setOnInsert: {
+        createdAt: now,
+      },
     },
-    create: {
-      address: data.address.toLowerCase(),
-      chainId: data.chainId,
-      provider: data.provider,
-      icon: data.icon,
-      url: data.url,
-      createdAt: now,
-      lastLoginAt: now,
-    },
-  });
+    { upsert: true },
+  );
+
+  return db
+    .collection("users")
+    .findOne({ address: data.address.toLowerCase() });
 }
