@@ -1,6 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, type NextFunction } from "express";
 
-export function globalErrorHandler(err: unknown, _req: Request, res: Response) {
+export function globalErrorHandler(
+  err: unknown,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) {
   console.error("[Global Error Handler]", err);
 
   if (err instanceof Error) {

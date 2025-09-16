@@ -33,9 +33,8 @@ export default [
       ...typescriptEslintPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       "tailwindcss/classnames-order": "warn",
-      "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
-      "unused-imports/no-unused-vars": [
+      "@typescript-eslint/no-unused-vars": [
         "warn",
         {
           vars: "all",
