@@ -6,4 +6,5 @@ export const urlEndpoints = {
   getTransactions: "/api/token/transactions",
   getNFTs: "/api/nfts",
   user: "/api/user",
+  mint: "/api/mint",
 };
