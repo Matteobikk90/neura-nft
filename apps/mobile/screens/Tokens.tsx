@@ -42,12 +42,10 @@ export default function TokenList() {
   }, [data?.balances, tokenSortBy]);
 
   return (
-    <View className="bg-foreground w-full flex-1 p-4">
+    <View className="bg-background w-full flex-1 p-4">
       <View className="mb-6 mt-2 flex-row items-center justify-between">
         <View>
-          <Text className="text-background font-jetmono-semiBold mb-1 text-3xl">
-            Tokens
-          </Text>
+          <Text className="font-jetmono-semiBold mb-1 text-3xl">Tokens</Text>
           <Text className="text-gray text-base">All tokens in your wallet</Text>
         </View>
         <Pressable

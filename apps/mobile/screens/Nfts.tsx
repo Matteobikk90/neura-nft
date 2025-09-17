@@ -46,12 +46,10 @@ export default function ExploreScreen() {
   } = usePagination(data?.trending ?? []);
 
   return (
-    <View className="bg-foreground flex-1 px-4 pt-6">
+    <View className="bg-background flex-1 px-4 pt-6">
       <View className="mb-6 flex-row items-center justify-between">
         <View>
-          <Text className="text-background font-jetmono-semiBold text-2xl">
-            Explore
-          </Text>
+          <Text className="font-jetmono-semiBold text-2xl">Explore</Text>
           <Text className="text-gray">Discover NFTs</Text>
         </View>
         <Pressable
@@ -108,9 +106,7 @@ export default function ExploreScreen() {
 
           <View className="mb-12">
             <View className="mb-2 flex-row items-center justify-between">
-              <Text className="text-background font-jetmono-semiBold text-2xl">
-                Trending
-              </Text>
+              <Text className="font-jetmono-semiBold text-2xl">Trending</Text>
             </View>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -141,7 +137,7 @@ export default function ExploreScreen() {
             </View>
 
             <View className="mb-2 mt-8 flex-row items-center justify-between">
-              <Text className="text-background font-jetmono-semiBold text-2xl">
+              <Text className="font-jetmono-semiBold text-2xl">
                 Your collection
               </Text>
               {data?.owned && data?.owned.length >= 5 && (

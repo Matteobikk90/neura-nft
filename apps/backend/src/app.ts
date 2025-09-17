@@ -1,5 +1,8 @@
 import { globalErrorHandler } from "@/middleware/error";
+import tokenRoutes from "@/routes/price";
 import userRoutes from "@/routes/user";
+
+import nftsRoutes from "@/routes/nfts";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -15,6 +18,8 @@ app.use(
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
+app.use("/api/token", tokenRoutes);
+app.use("/api/nfts", nftsRoutes);
 
 app.use(globalErrorHandler);
 

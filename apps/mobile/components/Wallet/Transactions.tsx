@@ -36,7 +36,7 @@ export function Transactions() {
   return (
     <View>
       <View className="mb-2 flex-row items-center justify-between">
-        <Text className="text-background font-jetmono-semiBold text-2xl">
+        <Text className="font-jetmono-semiBold text-2xl">
           Recent Transactions
         </Text>
         {data && data.transactions.length >= 5 && (
