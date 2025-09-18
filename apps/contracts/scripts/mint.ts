@@ -1,17 +1,21 @@
+import * as dotenv from "dotenv";
 import hre from "hardhat";
+
+dotenv.config();
 
 async function main() {
   const connection = await hre.network.connect();
   const [owner] = await connection.ethers.getSigners();
 
-  const metadataUri = process.argv[2];
+  const metadataUri = process.env.METADATA_URI;
+  const nftAddress = process.env.NFT_CONTRACT_ADDRESS!;
+
   if (!metadataUri) {
     throw new Error(
       "❌ Missing metadata URI. Usage:\n pnpm hardhat run scripts/mint.ts --network localhost -- ipfs://QmYourHash",
     );
   }
 
-  const nftAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
   const nft = await connection.ethers.getContractAt("NFT", nftAddress);
 
   console.log(

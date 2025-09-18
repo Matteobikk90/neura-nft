@@ -108,6 +108,9 @@ importers:
       '@openzeppelin/contracts':
         specifier: ^5.4.0
         version: 5.4.0
+      dotenv:
+        specifier: ^17.2.2
+        version: 17.2.2
     devDependencies:
       '@nomicfoundation/hardhat-ignition':
         specifier: ^3.0.2

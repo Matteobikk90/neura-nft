@@ -7,18 +7,20 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { useMutation } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
-import { Alert, Image, Pressable, TextInput, View } from "react-native";
+import { Image, Pressable, TextInput, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { useShallow } from "zustand/shallow";
 
 const inputStyle = "w-full rounded-md border border-gray bg-zinc p-3";
 
 export function MintModal() {
   const { colors } = useCustomTheme();
-  const { title, description, image, setMintInfo, clearMintForm } = useStore(
-    useShallow(({ ...state }) => ({
-      ...state,
-    })),
-  );
+  const { title, description, image, setMintInfo, clearMintForm, closeModal } =
+    useStore(
+      useShallow(({ ...state }) => ({
+        ...state,
+      })),
+    );
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: uploadMetadata,
@@ -54,13 +56,21 @@ export function MintModal() {
 
       const { metadataUri } = await mutateAsync(formData);
 
-      console.log("✅ Uploaded to IPFS:", metadataUri);
-      Alert.alert("Success", `Metadata uploaded! ${metadataUri}`);
+      console.log({ metadataUri });
+
+      Toast.show({
+        type: "success",
+        text1: "Your NFT metadata was uploaded! 🎉",
+      });
 
       clearMintForm();
-    } catch (err) {
-      console.error("❌ Mint error:", err);
-      Alert.alert("Error", "Failed to mint NFT");
+      closeModal();
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Failed to mint NFT, try again",
+      });
     }
   };
 
