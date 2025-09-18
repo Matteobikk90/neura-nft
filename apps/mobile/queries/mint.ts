@@ -1,10 +1,15 @@
 import { urlEndpoints } from "@/constants/urls";
-import type { MintNFTPayload } from "@/types/mint";
 import { axiosPost } from "@/utils/api";
 
-export async function mintNFT(payload: MintNFTPayload) {
-  return axiosPost<{ txHash: string }, MintNFTPayload>(
+export async function uploadMetadata(
+  formData: FormData,
+): Promise<{ metadataUri: string }> {
+  const res = await axiosPost<{ metadataUri: string }, FormData>(
     urlEndpoints.mint,
-    payload,
+    formData,
+    { headers: { "Content-Type": "multipart/form-data" } },
   );
+
+  if (!res) throw new Error("Upload failed");
+  return res;
 }

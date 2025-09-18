@@ -12,4 +12,6 @@ export const endpoints = {
     getCollectionNfts: (contract: string) =>
       `${ALCHEMY_BASE_URL}/getNFTsForCollection?contractAddress=${contract}&withMetadata=true`,
   },
+  imgToPinata: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+  metaToPinata: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
 };

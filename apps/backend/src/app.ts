@@ -1,4 +1,5 @@
 import { globalErrorHandler } from "@/middleware/error";
+import mintRoutes from "@/routes/mint";
 import tokenRoutes from "@/routes/price";
 import userRoutes from "@/routes/user";
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/token", tokenRoutes);
 app.use("/api/nfts", nftsRoutes);
+app.use("/api/mint", mintRoutes);
 
 app.use(globalErrorHandler);
 

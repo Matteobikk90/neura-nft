@@ -1,11 +1,11 @@
 import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { cn } from "@/lib/theme/cn";
 import { Text } from "@/lib/ui/Text";
-import { mintNFT } from "@/queries/mint";
+import { uploadMetadata } from "@/queries/mint";
 import { useStore } from "@/store";
 import { Ionicons } from "@expo/vector-icons";
+
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { Alert, Image, Pressable, TextInput, View } from "react-native";
 import { useShallow } from "zustand/shallow";
@@ -21,7 +21,7 @@ export function MintModal() {
   );
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: mintNFT,
+    mutationFn: uploadMetadata,
   });
 
   const pickImage = async () => {
@@ -33,75 +33,33 @@ export function MintModal() {
 
     if (!result.canceled) {
       const asset = result.assets[0];
-      const uri = asset.uri;
-
-      const ext = uri.split(".").pop() ?? "jpg";
 
       setMintInfo({
-        image: uri,
-        title: asset.fileName ?? `nft.${ext}`,
+        image: asset.uri,
       });
     }
   };
 
-  const uploadToPinata = async () => {
-    const ext = title.split(".").pop() ?? "jpg";
-    const formData = new FormData();
-    formData.append("file", {
-      uri: image,
-      name: title,
-      type: `image/${ext}`,
-    } as unknown as File);
-
-    // Upload image
-    const imgRes = await axios.post(
-      "https://api.pinata.cloud/pinning/pinFileToIPFS",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${process.env.EXPO_PUBLIC_PINATA_JWT}`,
-        },
-      },
-    );
-
-    const imageHash = imgRes.data.IpfsHash;
-
-    // Upload metadata
-    const metadata = {
-      name: title,
-      description,
-      image: `ipfs://${imageHash}`,
-    };
-
-    const metaRes = await axios.post(
-      "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-      metadata,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.EXPO_PUBLIC_PINATA_JWT}`,
-        },
-      },
-    );
-
-    return metaRes.data.IpfsHash;
-  };
-
   const handleMint = async () => {
     try {
-      // Step 1: Upload image + metadata to Pinata
-      const metadataHash = await uploadToPinata();
-      const metadataUri = `ipfs://${metadataHash}`;
+      const ext = image?.split(".").pop() ?? "jpg";
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("file", {
+        uri: image!,
+        name: `${title}.${ext}`,
+        type: `image/${ext}`,
+      } as unknown as File);
 
-      // Step 2: Call backend mint endpoint
-      const txHash = await mutateAsync({ metadataUri });
+      const { metadataUri } = await mutateAsync(formData);
 
-      console.log("✅ NFT minted, tx:", txHash);
-      Alert.alert("Success", `NFT minted! Tx: ${txHash}`);
+      console.log("✅ Uploaded to IPFS:", metadataUri);
+      Alert.alert("Success", `Metadata uploaded! ${metadataUri}`);
 
       clearMintForm();
-    } catch {
+    } catch (err) {
+      console.error("❌ Mint error:", err);
       Alert.alert("Error", "Failed to mint NFT");
     }
   };
