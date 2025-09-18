@@ -54,9 +54,7 @@ export function MintModal() {
         type: `image/${ext}`,
       } as unknown as File);
 
-      const { metadataUri } = await mutateAsync(formData);
-
-      console.log({ metadataUri });
+      await mutateAsync(formData);
 
       Toast.show({
         type: "success",

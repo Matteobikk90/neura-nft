@@ -1,6 +1,7 @@
 import { ENV } from "@/config/env";
 
 const ALCHEMY_BASE_URL = `https://eth-mainnet.g.alchemy.com/nft/v2/${ENV.ALCHEMY_API_KEY}`;
+const ALCHEMY_SEPOLIA_URL = `https://eth-sepolia.g.alchemy.com/nft/v2/${ENV.ALCHEMY_API_KEY}`;
 
 export const endpoints = {
   getPrice:
@@ -8,7 +9,7 @@ export const endpoints = {
     "?ids=ethereum&vs_currencies=usd&include_24hr_change=true",
   alchemy: {
     getOwnedNfts: (address: string) =>
-      `${ALCHEMY_BASE_URL}/getNFTs?owner=${address}`,
+      `${ALCHEMY_SEPOLIA_URL}/getNFTs?owner=${address}`,
     getCollectionNfts: (contract: string) =>
       `${ALCHEMY_BASE_URL}/getNFTsForCollection?contractAddress=${contract}&withMetadata=true`,
   },
