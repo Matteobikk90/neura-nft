@@ -3,6 +3,8 @@ import { ENV } from "@/config/env";
 const ALCHEMY_BASE_URL = `https://eth-mainnet.g.alchemy.com/nft/v2/${ENV.ALCHEMY_API_KEY}`;
 const ALCHEMY_SEPOLIA_URL = `https://eth-sepolia.g.alchemy.com/nft/v2/${ENV.ALCHEMY_API_KEY}`;
 
+export const PINATA_GATEWAY = `https://green-electoral-guanaco-519.mypinata.cloud/ipfs`;
+
 export const endpoints = {
   getPrice:
     "https://api.coingecko.com/api/v3/simple/price" +

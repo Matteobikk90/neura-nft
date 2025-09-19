@@ -170,7 +170,9 @@ export default function ExploreScreen() {
                   .map((nft) => (
                     <NFTCard
                       key={nft.id?.tokenId}
-                      image={{ uri: nft.media?.[0]?.gateway }}
+                      image={{
+                        uri: nft.metadata?.image,
+                      }}
                       title={
                         nft.title?.trim() ||
                         nft.metadata?.name?.trim() ||

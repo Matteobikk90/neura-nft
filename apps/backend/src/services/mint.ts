@@ -1,4 +1,4 @@
-import { endpoints } from "@/constants/urls";
+import { endpoints, PINATA_GATEWAY } from "@/constants/urls";
 import axios from "axios";
 import type { Express } from "express";
 import FormData from "form-data";
@@ -26,7 +26,7 @@ export async function uploadToPinata(
   const pinataContent = {
     name: title,
     description,
-    image: `ipfs://${imageHash}`,
+    image: `${PINATA_GATEWAY}/${imageHash}`,
   };
 
   const metaRes = await axios.post(
@@ -40,5 +40,5 @@ export async function uploadToPinata(
     },
   );
 
-  return `ipfs://${metaRes.data.IpfsHash}`;
+  return `${PINATA_GATEWAY}/${metaRes.data.IpfsHash}`;
 }

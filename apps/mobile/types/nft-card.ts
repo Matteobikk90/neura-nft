@@ -9,7 +9,7 @@ type NFTAttribute = {
 export type AlchemyNFT = {
   media: { gateway: string; thumbnail: string }[];
   title?: string;
-  metadata?: { name?: string; attributes: NFTAttribute[] };
+  metadata?: { name?: string; attributes: NFTAttribute[]; image: string };
   contract: { address: string };
   contractMetadata?: {
     name?: string;
