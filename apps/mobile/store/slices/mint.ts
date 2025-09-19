@@ -11,4 +11,6 @@ export const createMintSlice: StateCreator<MintSliceType> = (set) => ({
       ...info,
     })),
   clearMintForm: () => set({ title: "", description: "", image: null }),
+  selectedCategory: "Art",
+  setSelectedCategory: (selectedCategory) => set({ selectedCategory }),
 });

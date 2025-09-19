@@ -1,3 +1,4 @@
+import { queryClient } from "@/config/queryClient";
 import { useCustomTheme } from "@/hooks/useCustomTheme";
 import { cn } from "@/lib/theme/cn";
 import { Text } from "@/lib/ui/Text";
@@ -15,12 +16,20 @@ const inputStyle = "w-full rounded-md border border-gray bg-zinc p-3";
 
 export function MintModal() {
   const { colors } = useCustomTheme();
-  const { title, description, image, setMintInfo, clearMintForm, closeModal } =
-    useStore(
-      useShallow(({ ...state }) => ({
-        ...state,
-      })),
-    );
+  const {
+    title,
+    description,
+    image,
+    setMintInfo,
+    clearMintForm,
+    closeModal,
+    address,
+    selectedCategory,
+  } = useStore(
+    useShallow(({ ...state }) => ({
+      ...state,
+    })),
+  );
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: uploadMetadata,
@@ -48,6 +57,7 @@ export function MintModal() {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
+      formData.append("to", address!);
       formData.append("file", {
         uri: image!,
         name: `${title}.${ext}`,
@@ -60,15 +70,18 @@ export function MintModal() {
         type: "success",
         text1: "Your NFT metadata was uploaded! 🎉",
       });
-
-      clearMintForm();
-      closeModal();
+      queryClient.invalidateQueries({
+        queryKey: ["explore-nfts", address, selectedCategory],
+      });
     } catch {
       Toast.show({
         type: "error",
         text1: "Error",
         text2: "Failed to mint NFT, try again",
       });
+    } finally {
+      clearMintForm();
+      closeModal();
     }
   };
 

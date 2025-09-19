@@ -6,4 +6,6 @@ export type MintSliceType = {
     info: Partial<Pick<MintSliceType, "title" | "description" | "image">>,
   ) => void;
   clearMintForm: () => void;
+  setSelectedCategory: (selectedCategory: string) => void;
+  selectedCategory: string;
 };

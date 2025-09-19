@@ -12,25 +12,25 @@ import { ExpandedSection } from "@/types/store/explore";
 import { resolveNFTTitle } from "@/utils/formatter";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export default function ExploreScreen() {
   const { colors } = useCustomTheme();
 
-  const { address, expandedSection, setExpandedSection, openModal } = useStore(
-    useShallow(
-      ({ address, expandedSection, setExpandedSection, openModal }) => ({
-        address,
-        expandedSection,
-        setExpandedSection,
-        openModal,
-      }),
-    ),
+  const {
+    address,
+    expandedSection,
+    setExpandedSection,
+    openModal,
+    selectedCategory,
+    setSelectedCategory,
+  } = useStore(
+    useShallow(({ ...state }) => ({
+      ...state,
+    })),
   );
   const showAllOwned = expandedSection === ExpandedSection.OWNED;
-  const [selectedCategory, setSelectedCategory] = useState("Art");
   const { data, isLoading, error } = useQuery({
     queryKey: ["explore-nfts", address, selectedCategory],
     queryFn: () => getExploreNFTs(address!, selectedCategory),

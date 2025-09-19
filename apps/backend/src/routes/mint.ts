@@ -1,4 +1,4 @@
-import { uploadMetadata } from "@/controllers/mint";
+import { uploadAndMint } from "@/controllers/mint";
 import { asyncHandler } from "@/handlers/async";
 import { authRateLimiter } from "@/middleware/rate-limit";
 import { validateBody } from "@/middleware/validate";
@@ -14,7 +14,7 @@ router.post(
   authRateLimiter,
   upload.single("file"),
   validateBody(createMintSchema),
-  asyncHandler(uploadMetadata),
+  asyncHandler(uploadAndMint),
 );
 
 export default router;
