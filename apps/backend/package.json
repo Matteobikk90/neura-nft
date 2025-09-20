@@ -30,6 +30,7 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^22.18.1",
     "multer": "^2.0.2",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.20.5",
     "typescript": "~5.8.3"
   }
