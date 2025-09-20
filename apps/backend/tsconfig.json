@@ -12,10 +12,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "resolveJsonModule": true,
-    "plugins": [
-      { "transform": "typescript-transform-paths", "afterDeclarations": true }
-    ]
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }
