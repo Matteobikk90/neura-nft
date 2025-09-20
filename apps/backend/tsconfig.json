@@ -13,7 +13,9 @@
       "@/*": ["src/*"]
     },
     "resolveJsonModule": true,
-    "plugins": [{ "transform": "typescript-transform-paths" }]
+    "plugins": [
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
   },
   "include": ["src"]
 }
