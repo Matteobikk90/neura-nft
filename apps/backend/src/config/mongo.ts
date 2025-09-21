@@ -1,7 +1,7 @@
 import { ENV } from "@/config/env";
 import { Db, MongoClient } from "mongodb";
 
-const client = new MongoClient(ENV.DATABASE_URL);
+const client = new MongoClient(ENV.DATABASE_RENDER_URL);
 
 let db: Db;
 
