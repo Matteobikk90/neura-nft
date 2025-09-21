@@ -13,7 +13,7 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: ["http://10.38.222.233:8081"],
+    origin: ["http://10.38.222.233:8081", "https://neura-nft.onrender.com"],
   }),
 );
 app.use(express.json());
