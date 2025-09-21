@@ -1,7 +1,13 @@
 import { ENV } from "@/config/env";
-import { Db, MongoClient } from "mongodb";
+import { Db, MongoClient, ServerApiVersion } from "mongodb";
 
-const client = new MongoClient(ENV.DATABASE_RENDER_URL);
+const client = new MongoClient(ENV.DATABASE_RENDER_URL, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
 let db: Db;
 
