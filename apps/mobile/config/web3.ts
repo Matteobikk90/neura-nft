@@ -5,6 +5,7 @@ import {
   createAppKit,
   defaultConfig,
 } from "@reown/appkit-ethers5-react-native";
+import "@walletconnect/react-native-compat";
 
 const config = defaultConfig({ metadata });
 
