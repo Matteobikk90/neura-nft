@@ -2,11 +2,11 @@ import { sliderItems } from "@/constants/slides";
 import { bottomPadding } from "@/constants/variables";
 import { useWalletLifecycle } from "@/hooks/useWalletLifecycle";
 import { Text } from "@/lib/ui/Text";
+import WalletScreen from "@/screens/Wallet";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Dimensions, Image, Pressable, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
-import WalletScreen from "./Wallet";
 
 const { width, height } = Dimensions.get("window");
 

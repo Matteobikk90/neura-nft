@@ -52,15 +52,33 @@ export default function ExploreScreen() {
           <Text className="font-jetmono-semiBold text-2xl">Explore</Text>
           <Text className="text-gray">Discover NFTs</Text>
         </View>
-        <Pressable
-          onPress={() => openModal("mint", {})}
-          className={cn(
-            "rounded-md px-4 py-2 bg-primary flex-row items-center justify-between gap-4",
-          )}
-        >
-          <Ionicons name="rocket-outline" size={22} color={colors.foreground} />
-          <Text>Mint NFT</Text>
-        </Pressable>
+        <View className="flex-row items-center gap-4">
+          <Pressable
+            onPress={() => openModal("info")}
+            className={cn(
+              "rounded-md p-1.5 bg-primary flex-row items-center justify-between gap-4",
+            )}
+          >
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color={colors.foreground}
+            />
+          </Pressable>
+          <Pressable
+            onPress={() => openModal("mint", {})}
+            className={cn(
+              "rounded-md px-4 py-2 bg-primary flex-row items-center justify-between gap-4",
+            )}
+          >
+            <Ionicons
+              name="rocket-outline"
+              size={22}
+              color={colors.foreground}
+            />
+            <Text>Mint NFT</Text>
+          </Pressable>
+        </View>
       </View>
 
       <WalletStatus />
@@ -166,7 +184,7 @@ export default function ExploreScreen() {
             ) : (
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {data?.owned
-                  .slice(0, showAllOwned ? undefined : 10)
+                  .slice(0, showAllOwned ? undefined : 5)
                   .map((nft) => (
                     <NFTCard
                       key={nft.id?.tokenId}

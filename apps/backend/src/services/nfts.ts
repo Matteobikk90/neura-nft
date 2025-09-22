@@ -21,10 +21,9 @@ export async function getExploreNFTs(address: string, category: string) {
 
       if (colData?.nfts) {
         for (const nft of colData.nfts) {
-          if (
-            nft.media?.length > 0 &&
-            (nft.media[0].gateway || nft.media[0].thumbnail)
-          ) {
+          const mediaUrl = nft.media?.[0]?.gateway || nft.media?.[0]?.thumbnail;
+
+          if (mediaUrl && !mediaUrl.includes("ipfs")) {
             trending.push(nft);
           }
         }

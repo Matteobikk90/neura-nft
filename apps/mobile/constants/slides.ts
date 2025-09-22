@@ -5,7 +5,7 @@ import tokenImage from "@/assets/images/token.jpeg";
 export const sliderItems = [
   {
     uri: balanceImage,
-    title: "Home",
+    title: "Wallet",
     description:
       "See your total wallet balance and latest transactions at a glance.",
   },
@@ -18,6 +18,7 @@ export const sliderItems = [
   {
     uri: nftsImage,
     title: "NFTs",
-    description: "Discover trending NFTs and manage your personal collection.",
+    description:
+      "Discover trending NFTs or mint your own collection directly in the app.",
   },
 ];

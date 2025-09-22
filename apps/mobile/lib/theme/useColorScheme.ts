@@ -46,10 +46,6 @@ async function setNavigationBar(colorScheme: "light" | "dark") {
     NavigationBar.setButtonStyleAsync(
       colorScheme === "dark" ? "light" : "dark",
     ),
-    NavigationBar.setPositionAsync("absolute"),
-    NavigationBar.setBackgroundColorAsync(
-      colorScheme === "dark" ? "#00000030" : "#ffffff80",
-    ),
   ]);
 }
 
