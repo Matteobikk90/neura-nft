@@ -1,3 +1,6 @@
+// prettier-ignore
+import "@walletconnect/react-native-compat";
+
 import { projectId } from "@/constants/variables";
 import { chains, metadata } from "@/constants/web3";
 import "@ethersproject/shims";
@@ -5,7 +8,6 @@ import {
   createAppKit,
   defaultConfig,
 } from "@reown/appkit-ethers5-react-native";
-import "@walletconnect/react-native-compat";
 
 const config = defaultConfig({ metadata });
 
