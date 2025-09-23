@@ -21,6 +21,11 @@ The project is still **not finalized**.
 A recent deploy introduced a bug that I’m working on fixing.  
 You can still run and test the project locally following the instructions below.
 
+⏳ `Note on backend loading time:`
+Since the backend is hosted on **Render’s free plan**, the server sleeps after inactivity.  
+The **first call after a while may take a few seconds** while the server wakes up.  
+Subsequent requests respond normally.
+
 ---
 
 ## 📲 Test Install (Internal Build)
