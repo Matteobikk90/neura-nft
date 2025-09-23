@@ -8,6 +8,6 @@ export default function (api) {
       ],
       "nativewind/babel",
     ],
-    plugins: ["react-native-reanimated/plugin", "react-native-worklets/plugin"],
+    plugins: ["react-native-reanimated/plugin"],
   };
 }

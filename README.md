@@ -15,6 +15,26 @@ It allows users to:
 
 ---
 
+## ⚠️ Project Status
+
+The project is still **not finalized**.  
+A recent deploy introduced a bug that I’m working on fixing.  
+You can still run and test the project locally following the instructions below.
+
+---
+
+## 📲 Test Install (Internal Build)
+
+You can install the latest internal distribution build on a test device:
+
+📌 [Expo build link](https://expo.dev/accounts/matteobikk90/projects/neura-nft/builds/00207446-48ac-4a8f-ba0e-8d2ef34a6ef3)
+
+Or scan the QR code below (saved in the root repo as `install-apk-qr.png`):
+
+![Install Link](./install-apk-qr.png)
+
+---
+
 ## 📁 Project Structure
 
 ```
