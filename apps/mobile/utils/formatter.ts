@@ -40,3 +40,10 @@ export function resolveNFTTitle(nft: AlchemyNFT): string {
 
   return tokenId !== null ? `#${tokenId}` : "Untitled";
 }
+
+export function isValidPrompt(prompt: string, minWords = 3): boolean {
+  if (!prompt) return false;
+  const words = prompt.trim().split(/\s+/);
+
+  return words.length >= minWords;
+}

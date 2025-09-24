@@ -1,4 +1,4 @@
-export const proxyTarget = process.env.EXPO_PUBLIC_RENDER_API_URL!;
+export const proxyTarget = process.env.EXPO_PUBLIC_API_URL!;
 
 export const urlEndpoints = {
   getPriceChange: "/api/token/price",
@@ -7,4 +7,5 @@ export const urlEndpoints = {
   getNFTs: "/api/nfts",
   user: "/api/user",
   mint: "/api/mint",
+  aiGenerate: "/api/ai",
 };

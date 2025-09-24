@@ -27,15 +27,15 @@ export function CustomModal() {
         clearMintForm();
       }}
     >
-      <View className="bg-zinc gap-4 rounded-md p-4">
+      <View className="bg-zinc items-center justify-center gap-4 rounded-md p-4">
         <Pressable
           onPress={() => {
             closeModal();
             clearMintForm();
           }}
-          className="absolute right-2 top-2 rounded-md border bg-zinc-800 p-2"
+          className="bg-background absolute right-2 top-2 rounded-md p-2"
         >
-          <Ionicons name="close" size={20} color={colors.background} />
+          <Ionicons name="close" size={20} color={colors.foreground} />
         </Pressable>
         {type === "qr" && <QrModal />}
         {type === "filter" && <SortModal />}

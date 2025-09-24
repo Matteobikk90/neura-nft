@@ -9,18 +9,16 @@ import { getUser } from "@/queries/user";
 import { useStore } from "@/store";
 import { copyToClipboard } from "@/utils/clipboard";
 import { Ionicons } from "@expo/vector-icons";
-
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, Image, Linking, Pressable, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
 export default function ProfileScreen() {
   const { colors } = useCustomTheme();
-  const { address, providerName, openModal } = useStore(
-    useShallow(({ address, providerName, openModal }) => ({
+  const { address, providerName } = useStore(
+    useShallow(({ address, providerName }) => ({
       address,
       providerName,
-      openModal,
     })),
   );
   const { isAuthenticated } = useWalletLifecycle();
