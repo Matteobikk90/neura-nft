@@ -10,4 +10,5 @@ export const ENV = {
   SEPOLIA_RPC_URL: process.env.SEPOLIA_RPC_URL!,
   SEPOLIA_PRIVATE_KEY: process.env.SEPOLIA_PRIVATE_KEY!,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  PINATA_JWT: process.env.PINATA_JWT!,
 };
