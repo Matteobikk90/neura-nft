@@ -18,12 +18,13 @@ app.use(
     origin: ["http://10.230.1.233:8081", "https://neura-nft.onrender.com"],
   }),
 );
+
+app.use("/api/mint", express.json({ limit: "5mb" }), mintRoutes);
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
 app.use("/api/token", tokenRoutes);
 app.use("/api/nfts", nftsRoutes);
-app.use("/api/mint", mintRoutes);
 app.use("/api/ai", aiRoutes);
 
 app.use(globalErrorHandler);

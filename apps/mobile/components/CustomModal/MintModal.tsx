@@ -54,8 +54,8 @@ export function MintModal() {
       queryClient.invalidateQueries({
         queryKey: ["explore-nfts", address, selectedCategory],
       });
-      // clearMintForm();
-      // closeModal();
+      clearMintForm();
+      closeModal();
     },
     onError: () => {
       Toast.show({
@@ -86,13 +86,15 @@ export function MintModal() {
       allowsEditing: true,
       aspect: [4, 3],
       defaultTab: "albums",
+      base64: true,
     });
 
     if (!result.canceled) {
-      const asset = result.assets[0];
+      Keyboard.dismiss();
+      const image = "data:image/jpeg;base64," + result.assets[0].base64;
 
       setMintInfo({
-        image: asset.uri,
+        image,
       });
     }
   };
@@ -100,28 +102,14 @@ export function MintModal() {
   const handleMint = async () => {
     Keyboard.dismiss();
 
-    if (image?.startsWith("data:image")) {
-      const base64 = image.split(",")[1];
-      await mutateAsync({
-        title,
-        description,
-        to: address!,
-        base64,
-      });
-    } else {
-      const ext = image?.split(".").pop() ?? "jpg";
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("to", address!);
-      formData.append("file", {
-        uri: image!,
-        name: `${title}.${ext}`,
-        type: `image/${ext}`,
-      } as unknown as File);
+    if (!image) return;
 
-      await mutateAsync(formData);
-    }
+    await mutateAsync({
+      title,
+      description,
+      to: address!,
+      base64: image,
+    });
   };
 
   const handleAIGenerate = async (prompt: string) => {
