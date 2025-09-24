@@ -10,7 +10,14 @@ import { isValidPrompt } from "@/utils/formatter";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
-import { Image, Pressable, Switch, TextInput, View } from "react-native";
+import {
+  Image,
+  Keyboard,
+  Pressable,
+  Switch,
+  TextInput,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
 import { useShallow } from "zustand/shallow";
 
@@ -37,12 +44,41 @@ export function MintModal() {
   );
   const { isDarkColorScheme } = useColorScheme();
 
-  const { mutateAsync, isPending } = useMutation({
+  const { mutateAsync: mutateAsync, isPending } = useMutation({
     mutationFn: uploadMetadata,
+    onSuccess: () => {
+      Toast.show({
+        type: "success",
+        text1: "Your NFT metadata was uploaded! 🎉",
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["explore-nfts", address, selectedCategory],
+      });
+      // clearMintForm();
+      // closeModal();
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Failed to mint NFT, try again",
+      });
+    },
   });
 
   const { mutateAsync: generateAsync, isPending: isAIPending } = useMutation({
     mutationFn: generateNFT,
+    onSuccess: ({ title, description, image }) => {
+      setMintInfo({ title, description, image, prompt });
+      Toast.show({ type: "success", text1: "AI NFT generated! 🎉" });
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "AI generation failed, try again",
+      });
+    },
   });
 
   const pickImage = async () => {
@@ -62,7 +98,17 @@ export function MintModal() {
   };
 
   const handleMint = async () => {
-    try {
+    Keyboard.dismiss();
+
+    if (image?.startsWith("data:image")) {
+      const base64 = image.split(",")[1];
+      await mutateAsync({
+        title,
+        description,
+        to: address!,
+        base64,
+      });
+    } else {
       const ext = image?.split(".").pop() ?? "jpg";
       const formData = new FormData();
       formData.append("title", title);
@@ -75,53 +121,12 @@ export function MintModal() {
       } as unknown as File);
 
       await mutateAsync(formData);
-
-      Toast.show({
-        type: "success",
-        text1: "Your NFT metadata was uploaded! 🎉",
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["explore-nfts", address, selectedCategory],
-      });
-    } catch {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Failed to mint NFT, try again",
-      });
-    } finally {
-      clearMintForm();
-      closeModal();
     }
   };
 
   const handleAIGenerate = async (prompt: string) => {
-    try {
-      const result = await generateAsync(prompt);
-      setMintInfo({
-        title: result.title,
-        description: result.description,
-        image: result.imageUrl,
-        prompt,
-      });
-      console.log({ result });
-      Toast.show({
-        type: "success",
-        text1: "Your AI generated NFT metadata was uploaded! 🎉",
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["explore-nfts", address, selectedCategory],
-      });
-    } catch {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "AI generation failed",
-      });
-    } finally {
-      clearMintForm();
-      closeModal();
-    }
+    Keyboard.dismiss();
+    await generateAsync(prompt);
   };
 
   const isFormValid = !!title && !!description && !!image;
@@ -163,7 +168,6 @@ export function MintModal() {
             placeholderTextColor={colors.gray}
             value={prompt}
             onChangeText={(prompt) => setMintInfo({ prompt })}
-            onSubmitEditing={(e) => handleAIGenerate(e.nativeEvent.text)}
             className="border-gray bg-zinc w-full rounded-md border p-3"
           />
           <Pressable

@@ -1,13 +1,18 @@
 import { urlEndpoints } from "@/constants/urls";
+import type { UploadMetadataType } from "@/types/mint";
 import { axiosPost } from "@/utils/api";
 
 export async function uploadMetadata(
-  formData: FormData,
+  payload: UploadMetadataType,
 ): Promise<{ metadataUri: string }> {
-  const res = await axiosPost<{ metadataUri: string }, FormData>(
+  const isFormData = payload instanceof FormData;
+
+  const res = await axiosPost<{ metadataUri: string }, UploadMetadataType>(
     urlEndpoints.mint,
-    formData,
-    { headers: { "Content-Type": "multipart/form-data" } },
+    payload,
+    isFormData
+      ? { headers: { "Content-Type": "multipart/form-data" } }
+      : { headers: { "Content-Type": "application/json" } },
   );
 
   if (!res) throw new Error("Upload failed");
