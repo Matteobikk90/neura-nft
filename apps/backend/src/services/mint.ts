@@ -9,12 +9,11 @@ async function uploadMetadataToPinata(
   const metadata = {
     name: title,
     description,
-    image: `ipfs://${imageCid}`,
+    image: `https://${PINATA_GATEWAY}/${imageCid}`,
+    author: "AI",
   };
 
-  const { cid } = await pinata.upload.public
-    .json(metadata)
-    .name(`${title}.json`);
+  const { cid } = await pinata.upload.public.json(metadata).name(title);
 
   return `https://${PINATA_GATEWAY}/${cid}`;
 }
@@ -28,13 +27,7 @@ export async function uploadToPinataBase64(
   const blob = new Blob([buffer], { type: "image/png" });
   const file = new File([blob], `${title}.png`, { type: "image/png" });
 
-  const { cid } = await pinata.upload.public
-    .file(file)
-    .name(`${title}.png`)
-    .keyvalues({
-      title,
-      description,
-    });
+  const { cid } = await pinata.upload.public.file(file).name(`${title}.png`);
 
   return uploadMetadataToPinata(title, description, cid);
 }

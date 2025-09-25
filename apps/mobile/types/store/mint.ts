@@ -4,10 +4,14 @@ export type MintSliceType = {
   image: string | null;
   prompt: string;
   isAImintMode: boolean;
+  author: string;
   toggleMintMode: () => void;
   setMintInfo: (
     info: Partial<
-      Pick<MintSliceType, "title" | "description" | "image" | "prompt">
+      Pick<
+        MintSliceType,
+        "title" | "description" | "image" | "prompt" | "author"
+      >
     >,
   ) => void;
   clearMintForm: () => void;

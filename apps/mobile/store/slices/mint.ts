@@ -7,6 +7,7 @@ export const createMintSlice: StateCreator<MintSliceType> = (set) => ({
   image: null,
   prompt: "",
   isAImintMode: false,
+  author: "",
   toggleMintMode: () =>
     set((state) => ({
       isAImintMode: !state.isAImintMode,
@@ -17,7 +18,7 @@ export const createMintSlice: StateCreator<MintSliceType> = (set) => ({
       ...info,
     })),
   clearMintForm: () =>
-    set({ title: "", description: "", image: null, prompt: "" }),
+    set({ title: "", description: "", image: null, prompt: "", author: "" }),
   selectedCategory: "Art",
   setSelectedCategory: (selectedCategory) => set({ selectedCategory }),
 });

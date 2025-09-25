@@ -1,6 +1,8 @@
 import { openai } from "@/config/ai";
 import { NFT_METADATA_PROMPT } from "@/constants/aiPrompt";
 
+const author = "AI";
+
 export const nftService = {
   async generateNFT(prompt: string) {
     const textRes = await openai.chat.completions.create({
@@ -30,6 +32,7 @@ export const nftService = {
       title,
       description,
       image: imageDataUri,
+      author,
     };
   },
 };

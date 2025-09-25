@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Pressable, ScrollView, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
-export default function ExploreScreen() {
+export default function NftsScreen() {
   const { colors } = useCustomTheme();
 
   const {
@@ -187,20 +187,12 @@ export default function ExploreScreen() {
                   .slice(0, showAllOwned ? undefined : 5)
                   .map((nft) => (
                     <NFTCard
-                      key={nft.id?.tokenId}
+                      key={nft.tokenId}
                       image={{
-                        uri: nft.metadata?.image,
+                        uri: nft.raw.metadata.image,
                       }}
-                      title={
-                        nft.title?.trim() ||
-                        nft.metadata?.name?.trim() ||
-                        `#${parseInt(nft.id.tokenId, 16)}`
-                      }
-                      creator={
-                        nft.contractMetadata?.name ??
-                        nft.contractMetadata?.contractDeployer ??
-                        "Unknown"
-                      }
+                      title={nft.raw.metadata.name}
+                      creator={nft.raw.metadata.author ?? "Unknown"}
                     />
                   ))}
               </ScrollView>

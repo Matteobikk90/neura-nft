@@ -14,6 +14,7 @@ import {
   Image,
   Keyboard,
   Pressable,
+  ScrollView,
   Switch,
   TextInput,
   View,
@@ -37,6 +38,7 @@ export function MintModal() {
     toggleMintMode,
     isAImintMode,
     prompt,
+    author,
   } = useStore(
     useShallow(({ ...state }) => ({
       ...state,
@@ -68,8 +70,8 @@ export function MintModal() {
 
   const { mutateAsync: generateAsync, isPending: isAIPending } = useMutation({
     mutationFn: generateNFT,
-    onSuccess: ({ title, description, image }) => {
-      setMintInfo({ title, description, image, prompt });
+    onSuccess: ({ title, description, image, author }) => {
+      setMintInfo({ title, description, image, prompt, author });
       Toast.show({ type: "success", text1: "AI NFT generated! 🎉" });
     },
     onError: () => {
@@ -117,134 +119,155 @@ export function MintModal() {
     await generateAsync(prompt);
   };
 
-  const isFormValid = !!title && !!description && !!image;
+  const isFormValid = !!title && !!description && !!image && !!author;
 
   return (
-    <View className="w-full gap-4">
-      <View className="gap-4">
-        <Text className="font-jetmono-semiBold text-background text-xl">
-          Mint a new NFT
-        </Text>
-        <Text className="text-background">
-          Choose whether to create your NFT manually or let AI generate it for
-          you
-        </Text>
-        <View className="flex-row items-center gap-2">
-          <Ionicons
-            name="person"
-            size={20}
-            color={!isAImintMode ? colors.yellow : colors.gray}
-          />
-          <Switch
-            value={isAImintMode}
-            onValueChange={toggleMintMode}
-            trackColor={{ true: colors.primary, false: colors.gray }}
-            thumbColor={isDarkColorScheme ? colors.foreground : colors.zinc}
-          />
-          <Ionicons
-            name="logo-android"
-            size={20}
-            color={isAImintMode ? colors.yellow : colors.gray}
-          />
+    <ScrollView showsHorizontalScrollIndicator={false}>
+      <View className="w-full gap-4">
+        <View className="gap-2">
+          <Text className="font-jetmono-semiBold text-background text-xl">
+            Mint a new NFT
+          </Text>
+          <Text className="text-background">
+            Choose whether to create your NFT manually or let AI generate it for
+            you
+          </Text>
+          <View className="flex-row items-center gap-2">
+            <Ionicons
+              name="person"
+              size={20}
+              color={!isAImintMode ? colors.yellow : colors.gray}
+            />
+            <Switch
+              value={isAImintMode}
+              onValueChange={toggleMintMode}
+              trackColor={{ true: colors.primary, false: colors.gray }}
+              thumbColor={isDarkColorScheme ? colors.foreground : colors.zinc}
+            />
+            <Ionicons
+              name="logo-android"
+              size={20}
+              color={isAImintMode ? colors.yellow : colors.gray}
+            />
+          </View>
         </View>
-      </View>
 
-      {isAImintMode ? (
-        <>
-          <TextInput
-            placeholder="Describe your NFT idea... (min: 3 words)"
-            placeholderTextColor={colors.gray}
-            value={prompt}
-            onChangeText={(prompt) => setMintInfo({ prompt })}
-            className="border-gray bg-zinc w-full rounded-md border p-3"
-          />
+        {isAImintMode ? (
+          <>
+            <TextInput
+              placeholder="Describe your NFT idea... (min: 3 words)"
+              placeholderTextColor={colors.gray}
+              value={prompt}
+              onChangeText={(prompt) => setMintInfo({ prompt })}
+              className="border-gray bg-zinc w-full rounded-md border p-3"
+            />
+            <Pressable
+              onPress={() => handleAIGenerate(prompt)}
+              disabled={!isValidPrompt(prompt) || isAIPending}
+              className={cn(
+                "flex-row items-center justify-center gap-2 rounded-md px-4 py-3",
+                isValidPrompt(prompt) && !isAIPending
+                  ? "bg-primary"
+                  : "bg-gray",
+              )}
+            >
+              <Ionicons
+                name="sparkles-outline"
+                size={20}
+                color={colors.foreground}
+              />
+              <Text className="font-jetmono-semiBold text-foreground">
+                {isAIPending ? "Generating..." : " Generate with AI"}
+              </Text>
+            </Pressable>
+            {title && (
+              <Text className="border-gray bg-zinc rounded-md border p-3">
+                {title}
+              </Text>
+            )}
+            {author && (
+              <Text className="border-gray bg-zinc rounded-md border p-3">
+                {author}
+              </Text>
+            )}
+            {description && (
+              <Text className="border-gray bg-zinc rounded-md border p-3">
+                {description}
+              </Text>
+            )}
+            {image && (
+              <Image
+                source={{ uri: image }}
+                className="h-[12.5rem] w-full rounded-md object-cover"
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <TextInput
+              placeholder="Title"
+              placeholderTextColor={colors.gray}
+              value={title}
+              onChangeText={(text) => setMintInfo({ title: text })}
+              className={inputStyle}
+            />
+            <TextInput
+              placeholder="Author"
+              placeholderTextColor={colors.gray}
+              value={author}
+              onChangeText={(text) => setMintInfo({ author: text })}
+              className={inputStyle}
+              multiline
+            />
+            <TextInput
+              placeholder="Description"
+              placeholderTextColor={colors.gray}
+              value={description}
+              onChangeText={(text) => setMintInfo({ description: text })}
+              className={inputStyle}
+              multiline
+            />
+            <Pressable
+              onPress={pickImage}
+              className={cn(
+                "flex-row items-center justify-center gap-2 rounded-md px-4 py-3",
+                image ? "bg-primary" : "bg-gray",
+              )}
+            >
+              <Ionicons name="image" size={20} color={colors.foreground} />
+              <Text className="font-jetmono-semiBold">
+                {image ? "Change Image" : "Pick Image"}
+              </Text>
+            </Pressable>
+            {image && (
+              <Image
+                source={{ uri: image }}
+                className="h-[12.5rem] w-full rounded-md object-cover"
+              />
+            )}
+          </>
+        )}
+
+        {isFormValid && (
           <Pressable
-            onPress={() => handleAIGenerate(prompt)}
-            disabled={!isValidPrompt(prompt) || isAIPending}
+            onPress={handleMint}
+            disabled={!isFormValid || isPending}
             className={cn(
               "flex-row items-center justify-center gap-2 rounded-md px-4 py-3",
-              isValidPrompt(prompt) && !isAIPending ? "bg-primary" : "bg-gray",
+              isFormValid && !isPending ? "bg-primary" : "bg-gray",
             )}
           >
             <Ionicons
-              name="sparkles-outline"
+              name="rocket-outline"
               size={20}
               color={colors.foreground}
             />
             <Text className="font-jetmono-semiBold text-foreground">
-              {isAIPending ? "Generating..." : " Generate with AI"}
+              {isPending ? "Minting..." : "Mint NFT"}
             </Text>
           </Pressable>
-          {title && (
-            <Text className="border-gray bg-zinc gap-2 rounded-md border p-3">
-              {title}
-            </Text>
-          )}
-          {description && (
-            <Text className="border-gray bg-zinc gap-2 rounded-md border p-3">
-              {description}
-            </Text>
-          )}
-          {image && (
-            <Image
-              source={{ uri: image }}
-              className="h-[12.5rem] w-full rounded-md object-cover"
-            />
-          )}
-        </>
-      ) : (
-        <>
-          <TextInput
-            placeholder="Title"
-            placeholderTextColor={colors.gray}
-            value={title}
-            onChangeText={(text) => setMintInfo({ title: text })}
-            className={inputStyle}
-          />
-          <TextInput
-            placeholder="Description"
-            placeholderTextColor={colors.gray}
-            value={description}
-            onChangeText={(text) => setMintInfo({ description: text })}
-            className={inputStyle}
-            multiline
-          />
-          <Pressable
-            onPress={pickImage}
-            className={cn(
-              "flex-row items-center justify-center gap-2 rounded-md px-4 py-3",
-              image ? "bg-primary" : "bg-gray",
-            )}
-          >
-            <Ionicons name="image" size={20} color={colors.foreground} />
-            <Text className="font-jetmono-semiBold">
-              {image ? "Change Image" : "Pick Image"}
-            </Text>
-          </Pressable>
-          {image && (
-            <Image
-              source={{ uri: image }}
-              className="h-[12.5rem] w-full rounded-md object-cover"
-            />
-          )}
-        </>
-      )}
-
-      {isFormValid && (
-        <Pressable
-          onPress={handleMint}
-          disabled={!isFormValid || isPending}
-          className={cn(
-            "flex-row items-center justify-center gap-2 rounded-md px-4 py-3",
-            isFormValid && !isPending ? "bg-primary" : "bg-gray",
-          )}
-        >
-          <Ionicons name="rocket-outline" size={20} color={colors.foreground} />
-          <Text className="font-jetmono-semiBold text-foreground">
-            {isPending ? "Minting..." : "Mint NFT"}
-          </Text>
-        </Pressable>
-      )}
-    </View>
+        )}
+      </View>
+    </ScrollView>
   );
 }
