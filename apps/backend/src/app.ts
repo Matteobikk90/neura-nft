@@ -19,7 +19,7 @@ app.use(
   }),
 );
 
-app.use("/api/mint", express.json({ limit: "5mb" }), mintRoutes);
+app.use("/api/mint", express.json({ limit: "10mb" }), mintRoutes);
 app.use(express.json());
 
 app.use("/api/user", userRoutes);

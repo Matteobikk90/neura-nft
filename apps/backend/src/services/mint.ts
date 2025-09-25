@@ -4,20 +4,19 @@ import { PINATA_GATEWAY } from "@/constants/urls";
 async function uploadMetadataToPinata(
   title: string,
   description: string,
-  imageUrl: string,
+  imageCid: string,
 ) {
   const metadata = {
     name: title,
     description,
-    image: imageUrl,
+    image: `ipfs://${imageCid}`,
   };
 
-  const { cid } = await pinata.upload.public.json(metadata).keyvalues({
-    title,
-    description,
-  });
+  const { cid } = await pinata.upload.public
+    .json(metadata)
+    .name(`${title}.json`);
 
-  return `https://${PINATA_GATEWAY}/ipfs/${cid}`;
+  return `https://${PINATA_GATEWAY}/${cid}`;
 }
 
 export async function uploadToPinataBase64(
@@ -25,12 +24,17 @@ export async function uploadToPinataBase64(
   title: string,
   description: string,
 ) {
-  const { cid } = await pinata.upload.public.base64(base64).keyvalues({
-    title,
-    description,
-  });
+  const buffer = Buffer.from(base64.split(",")[1], "base64");
+  const blob = new Blob([buffer], { type: "image/png" });
+  const file = new File([blob], `${title}.png`, { type: "image/png" });
 
-  const imageUrl = `https://${PINATA_GATEWAY}/ipfs/${cid}`;
+  const { cid } = await pinata.upload.public
+    .file(file)
+    .name(`${title}.png`)
+    .keyvalues({
+      title,
+      description,
+    });
 
-  return uploadMetadataToPinata(title, description, imageUrl);
+  return uploadMetadataToPinata(title, description, cid);
 }
