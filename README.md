@@ -32,7 +32,7 @@ Subsequent requests respond normally.
 
 You can install the latest internal distribution build on a test device:
 
-📌 [Expo build link](https://expo.dev/accounts/matteobikk90/projects/neura-nft/builds/ea44a887-523c-41d4-8e3c-ad35fb38d8f7)
+📌 [Expo build link](https://expo.dev/accounts/matteobikk90/projects/neura-nft/builds/e3c555de-ca08-4ce1-af2c-161707b2d1bf)
 
 Or scan the QR code below (saved in the root repo as `install-apk-qr.png`):
 

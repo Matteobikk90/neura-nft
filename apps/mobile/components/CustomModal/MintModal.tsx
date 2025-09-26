@@ -159,7 +159,7 @@ export function MintModal() {
               placeholderTextColor={colors.gray}
               value={prompt}
               onChangeText={(prompt) => setMintInfo({ prompt })}
-              className="border-gray bg-zinc w-full rounded-md border p-3"
+              className={inputStyle}
             />
             <Pressable
               onPress={() => handleAIGenerate(prompt)}
